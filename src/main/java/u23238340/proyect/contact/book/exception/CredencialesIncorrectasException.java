@@ -1,4 +1,4 @@
-package u23238340.proyect.contact.book.data.exception;
+package u23238340.proyect.contact.book.exception;
 
 public class CredencialesIncorrectasException extends Exception {
 

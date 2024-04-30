@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import u23238340.proyect.contact.book.data.exception.CredencialesIncorrectasException;
+import u23238340.proyect.contact.book.exception.CredencialesIncorrectasException;
 
 public class Login extends javax.swing.JFrame {
 
