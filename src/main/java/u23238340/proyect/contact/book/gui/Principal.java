@@ -15,15 +15,15 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         btnListContac = new javax.swing.JButton();
         btnAniadirContacto = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("GESTOR DE CONTACTOS");
+        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelTitulo.setText("GESTOR DE CONTACTOS");
 
         btnListContac.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnListContac.setText("Lista de Contactos");
@@ -57,7 +57,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(224, 224, 224)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabelTitulo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(271, 271, 271)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,7 +72,7 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitulo)
                 .addGap(54, 54, 54)
                 .addComponent(btnListContac)
                 .addGap(34, 34, 34)
@@ -146,7 +146,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnAniadirContacto;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnListContac;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

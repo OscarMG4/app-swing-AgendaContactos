@@ -58,17 +58,17 @@ public class ListaContactos extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabelDetalle = new javax.swing.JLabel();
+        jLabelNom = new javax.swing.JLabel();
+        jLabelNumero = new javax.swing.JLabel();
+        jLabelCorreo = new javax.swing.JLabel();
+        jLabelDirec = new javax.swing.JLabel();
+        jLabelCumpleanios = new javax.swing.JLabel();
+        jLabelNota = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelNum = new javax.swing.JLabel();
         jLabel11Correo = new javax.swing.JLabel();
@@ -81,8 +81,8 @@ public class ListaContactos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("- Lista de contactos -");
+        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelTitulo.setText("- Lista de contactos -");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Editar");
@@ -103,26 +103,26 @@ public class ListaContactos extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setText("Detalle:");
+        jLabelDetalle.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelDetalle.setText("Detalle:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Nombre:");
+        jLabelNom.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelNom.setText("Nombre:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Número:");
+        jLabelNumero.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelNumero.setText("Número:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Correo:");
+        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelCorreo.setText("Correo:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Dirección:");
+        jLabelDirec.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelDirec.setText("Dirección:");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Cumpleaños:");
+        jLabelCumpleanios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelCumpleanios.setText("Cumpleaños:");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("Notas:");
+        jLabelNota.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelNota.setText("Notas:");
 
         jLabelNombre.setText("jLabelNombre");
 
@@ -181,28 +181,28 @@ public class ListaContactos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(jLabelTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnListar)))
                         .addGap(68, 68, 68)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(jLabelDetalle)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(jLabel3))
+                                .addComponent(jLabelNom))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(jLabel4))
+                                .addComponent(jLabelNumero))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
-                                .addComponent(jLabel5))
+                                .addComponent(jLabelCorreo))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(jLabel6))
-                            .addComponent(jLabel7)
+                                .addComponent(jLabelDirec))
+                            .addComponent(jLabelCumpleanios)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
-                                .addComponent(jLabel8)))
+                                .addComponent(jLabelNota)))
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNombre)
@@ -226,24 +226,24 @@ public class ListaContactos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabelTitulo)
                     .addComponent(btnListar))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
-                        .addComponent(jLabel2)
+                        .addComponent(jLabelDetalle)
                         .addGap(28, 28, 28)
-                        .addComponent(jLabel3)
+                        .addComponent(jLabelNom)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
+                        .addComponent(jLabelNumero)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
+                        .addComponent(jLabelCorreo)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
+                        .addComponent(jLabelDirec)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
+                        .addComponent(jLabelCumpleanios)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8))
+                        .addComponent(jLabelNota))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -361,20 +361,20 @@ public class ListaContactos extends javax.swing.JFrame {
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11Correo;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelCumple;
+    private javax.swing.JLabel jLabelCumpleanios;
+    private javax.swing.JLabel jLabelDetalle;
+    private javax.swing.JLabel jLabelDirec;
     private javax.swing.JLabel jLabelDireccion;
+    private javax.swing.JLabel jLabelNom;
     private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelNota;
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelNum;
+    private javax.swing.JLabel jLabelNumero;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTListContac;
