@@ -80,6 +80,7 @@ public class ListaContactos extends javax.swing.JFrame {
         btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelTitulo.setText("- Lista de contactos -");

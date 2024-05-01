@@ -41,6 +41,7 @@ public class Login extends javax.swing.JFrame {
         btnIngresar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelTitulo.setText("Por favor Inicie Sesión");
