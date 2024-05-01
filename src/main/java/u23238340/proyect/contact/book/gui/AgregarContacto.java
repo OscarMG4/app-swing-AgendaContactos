@@ -132,6 +132,7 @@ public class AgregarContacto extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Añadir Contacto");
@@ -253,19 +254,17 @@ public class AgregarContacto extends javax.swing.JFrame {
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Realmente desea cancelar el guardado?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
             limpiar();
-            // Crear un temporizador para esperar unos segundos antes de volver al principal
+            //temporizador
             Timer timer = new Timer(500, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Regresar a la ventana principal después del retraso
                     Principal principal = new Principal();
                     principal.setVisible(true);
                     dispose();
                 }
             });
-
-            // Iniciar el temporizador
-            timer.setRepeats(false); // Solo queremos que se ejecute una vez
+            
+            timer.setRepeats(false);
             timer.start();
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
