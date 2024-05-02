@@ -98,7 +98,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListContacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListContacActionPerformed
-        ListaContactos listaContactos = new ListaContactos();
+        ListaContactos listaContactos = ListaContactos.getInstance();
         listaContactos.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnListContacActionPerformed

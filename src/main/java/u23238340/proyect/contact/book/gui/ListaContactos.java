@@ -13,6 +13,15 @@ import u23238340.proyect.contact.book.data.ContactosData;
 public class ListaContactos extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
+    private static ListaContactos instance = null;
+
+
+    public static ListaContactos getInstance() {
+        if (instance == null) {
+            instance = new ListaContactos();
+        }
+        return instance;
+    }
     //ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
 
     public ListaContactos() {

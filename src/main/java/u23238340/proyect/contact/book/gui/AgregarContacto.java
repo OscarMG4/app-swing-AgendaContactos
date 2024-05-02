@@ -264,7 +264,7 @@ public class AgregarContacto extends javax.swing.JFrame {
                     dispose();
                 }
             });
-            
+
             timer.setRepeats(false);
             timer.start();
         }
@@ -296,6 +296,10 @@ public class AgregarContacto extends javax.swing.JFrame {
             ContactosData.listaContactos.add(nuevoContacto);
             limpiar();
             JOptionPane.showMessageDialog(this, "Contacto guardado exitosamente.");
+
+            Principal principal = new Principal();
+            principal.setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
