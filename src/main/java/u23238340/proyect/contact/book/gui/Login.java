@@ -14,7 +14,7 @@ public class Login extends javax.swing.JFrame {
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
 
-        txtUsuario.addActionListener(new ActionListener() {
+        txtUsuario.addActionListener(new ActionListener() { //focus
             @Override
             public void actionPerformed(ActionEvent e) {
                 password.requestFocusInWindow();

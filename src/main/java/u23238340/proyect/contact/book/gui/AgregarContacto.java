@@ -21,7 +21,7 @@ public class AgregarContacto extends javax.swing.JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetter(c) && !Character.isWhitespace(c)) {
-                    e.consume(); //ignora el evento si no es una letra o espacio en blanco
+                    e.consume(); //no es una letra o espacio en blanco
                 }
             }
         });
@@ -31,7 +31,7 @@ public class AgregarContacto extends javax.swing.JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isDigit(c)) {
-                    e.consume(); //ignora el evento si no es un dígito
+                    e.consume(); //no es un dígito
                 }
             }
         });
@@ -41,7 +41,7 @@ public class AgregarContacto extends javax.swing.JFrame {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetterOrDigit(c) && c != '@' && c != '.' && c != '_' && c != '-' && c != '+' && c != '%') {
-                    e.consume(); //ignora el evento si el carácter no es válido
+                    e.consume(); //si el carácter no es válido
                 }
             }
         });
@@ -50,7 +50,7 @@ public class AgregarContacto extends javax.swing.JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    JTNumero.requestFocus();
+                    JTNumero.requestFocus(); //focus
                 }
             }
         });
