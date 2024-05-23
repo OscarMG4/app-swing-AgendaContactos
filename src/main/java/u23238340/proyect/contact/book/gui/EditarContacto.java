@@ -298,7 +298,6 @@ public class EditarContacto extends javax.swing.JFrame {
             String cumpleanios = jTCumpleanios.getText();
             String notas = JTNota.getText();
 
-            // Actualiza el contacto existente en la lista
             contacto.setNombre(nombre);
             contacto.setNumero(numero);
             contacto.setCorreo(correo);
@@ -306,10 +305,8 @@ public class EditarContacto extends javax.swing.JFrame {
             contacto.setCumpleanios(cumpleanios);
             contacto.setNotas(notas);
 
-            // Muestra un mensaje de confirmación
             JOptionPane.showMessageDialog(this, "Contacto actualizado exitosamente.");
 
-            // Cierra la ventana actual y muestra la ventana principal
             Principal principal = new Principal();
             principal.setVisible(true);
             dispose();
