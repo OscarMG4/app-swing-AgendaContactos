@@ -15,7 +15,6 @@ public class ListaContactos extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     private static ListaContactos instance = null;
 
-
     public static ListaContactos getInstance() {
         if (instance == null) {
             instance = new ListaContactos();
@@ -68,7 +67,7 @@ public class ListaContactos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         jLabelDetalle = new javax.swing.JLabel();
@@ -94,8 +93,13 @@ public class ListaContactos extends javax.swing.JFrame {
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelTitulo.setText("- Lista de contactos -");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Editar");
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -224,7 +228,7 @@ public class ListaContactos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnEditar)
                         .addGap(34, 34, 34)
                         .addComponent(btnEliminar)
                         .addGap(39, 39, 39)))
@@ -274,7 +278,7 @@ public class ListaContactos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnVolver)
-                    .addComponent(jButton1))
+                    .addComponent(btnEditar))
                 .addGap(46, 46, 46))
         );
 
@@ -358,6 +362,25 @@ public class ListaContactos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTListContacMouseClicked
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int selectedRow = jTListContac.getSelectedRow();
+
+        if (selectedRow != -1) {
+            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+
+            for (Contacto contacto : ContactosData.listaContactos) {
+                if (contacto.getNombre().equals(nombreContacto)) {
+                    EditarContacto editarContacto = new EditarContacto(contacto);
+                    editarContacto.setVisible(true);
+                    dispose();
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -367,10 +390,10 @@ public class ListaContactos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel11Correo;
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelCumple;
