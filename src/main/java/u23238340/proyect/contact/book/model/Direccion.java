@@ -19,6 +19,21 @@ public class Direccion {
         this.pais = pais;
         this.tipoDireccion = tipoDireccion;
     }
+    
+    public Direccion(int idDireccion, String calle, String ciudad, String pais, String tipoDireccion) {
+        this.idDireccion = idDireccion;
+        this.calle = calle;
+        this.ciudad = ciudad;
+        this.pais = pais;
+        this.tipoDireccion = tipoDireccion;
+    }
+    
+      public Direccion(String calle, String ciudad, String pais, String tipoDireccion) {
+        this.calle = calle;
+        this.ciudad = ciudad;
+        this.pais = pais;
+        this.tipoDireccion = tipoDireccion;
+    }
 
     public int getIdDireccion() {
         return idDireccion;

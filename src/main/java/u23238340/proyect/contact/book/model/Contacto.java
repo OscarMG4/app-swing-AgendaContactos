@@ -18,8 +18,9 @@ public class Contacto {
     public Contacto() {
     }
 
-    // Constructor con los parámetros necesarios
-    public Contacto(String nombre, String email, Date cumpleanios, byte[] foto, String nota, String direccion, String telefonos) {
+    // Constructor para crear un Contacto sin ID inicialmente
+    public Contacto(int idContacto, String nombre, String email, Date cumpleanios, byte[] foto, String nota, String direccion, String telefonos) {
+        this.idContacto = idContacto;
         this.nombre = nombre;
         this.email = email;
         this.cumpleanios = cumpleanios;

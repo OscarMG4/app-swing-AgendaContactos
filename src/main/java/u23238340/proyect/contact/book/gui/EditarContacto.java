@@ -4,8 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import u23238340.proyect.contact.book.dao.ContactoDAO;
 import u23238340.proyect.contact.book.model.Contacto;
 //import u23238340.proyect.contact.book.dao.Contacto;
 //import u23238340.proyect.contact.book.dao.ContactosData;
@@ -13,19 +17,21 @@ import u23238340.proyect.contact.book.model.Contacto;
 public class EditarContacto extends javax.swing.JFrame {
 
     private Contacto contacto;
+    private ContactoDAO contactoDAO;
 
     public EditarContacto(Contacto contacto) {
-        this.contacto = contacto; // Asigna el contacto recibido
+        this.contacto = contacto;
+        this.contactoDAO = new ContactoDAO();
         initComponents();
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
 
-//        JTNombre.setText(contacto.getNombre());
-//        JTNumero.setText(contacto.getNumero());
-//        JTCorreo.setText(contacto.getCorreo());
-//        JTDireccion.setText(contacto.getDireccion());
-//        jTCumpleanios.setText(contacto.getCumpleanios());
-//        JTNota.setText(contacto.getNotas());
+        JTNombre.setText(contacto.getNombre());
+        JTNumero.setText(contacto.getTelefonos());
+        JTCorreo.setText(contacto.getEmail());
+        JTDireccion.setText(contacto.getDireccion());
+        jTCumpleanios.setText(contacto.getCumpleanios().toString());
+        JTNota.setText(contacto.getNota());
 
         JTNombre.addKeyListener(new KeyAdapter() {
             @Override
@@ -292,27 +298,44 @@ public class EditarContacto extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (validarCampos()) {
-            String nombre = JTNombre.getText();
-            String numero = JTNumero.getText();
-            String correo = JTCorreo.getText();
-            String direccion = JTDireccion.getText();
-            String cumpleanios = jTCumpleanios.getText();
-            String notas = JTNota.getText();
+            // Obtener el contacto completo desde la base de datos para edición
+            Contacto contacto = obtenerContactoParaEdicion(this.contacto.getIdContacto()); // Usar directamente el ID del objeto Contacto
 
-//            contacto.setNombre(nombre);
-//            contacto.setNumero(numero);
-//            contacto.setCorreo(correo);
-//            contacto.setDireccion(direccion);
-//            contacto.setCumpleanios(cumpleanios);
-//            contacto.setNotas(notas);
+            if (contacto == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró el contacto con el ID especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            // Actualizar el objeto Contacto con los nuevos datos ingresados desde la interfaz de usuario
+            contacto.setNombre(JTNombre.getText());
+            contacto.setEmail(JTCorreo.getText());
+            contacto.setNota(JTNota.getText());
+            contacto.setDireccion(JTDireccion.getText()); // Utilizar JTDireccion para la dirección
+            contacto.setCumpleanios(obtenerFechaCumpleanios()); // Utilizar jTCumpleanios para la fecha de cumpleaños
+
+            // Llamar al método actualizarContacto del ContactoDAO
+            contactoDAO.actualizarContacto(contacto);
+
+            // Mostrar mensaje de éxito y cerrar ventana
             JOptionPane.showMessageDialog(this, "Contacto actualizado exitosamente.");
-
-            Principal principal = new Principal();
-            principal.setVisible(true);
-            dispose();
+            dispose(); // Cerrar la ventana de edición después de guardar
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public Contacto obtenerContactoParaEdicion(int idContacto) {
+        return contactoDAO.obtenerContactoPorId(idContacto);
+    }
+
+    private Date obtenerFechaCumpleanios() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaCumpleanios = null;
+        try {
+            fechaCumpleanios = new Date(sdf.parse(jTCumpleanios.getText()).getTime());
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return fechaCumpleanios;
+    }
 
     private boolean validarCampos() {
         StringBuilder mensaje = new StringBuilder("Por favor, complete los siguientes campos:\n");

@@ -23,7 +23,12 @@ public class ListaContactos extends javax.swing.JFrame {
 
     public ListaContactos() {
         initComponents();
-        modelo.addColumn("Seleccione");
+        // Inicializar el modelo de la tabla con las columnas necesarias
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        jTListContac.setModel(modelo);
+
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
         ocultarJLabels();
@@ -302,7 +307,7 @@ public class ListaContactos extends javax.swing.JFrame {
         List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
 
         for (Contacto contacto : listaContactos) {
-            Object[] rowData = {contacto.getNombre()};
+            Object[] rowData = {contacto.getIdContacto(), contacto.getNombre()};
             model.addRow(rowData);
         }
     }//GEN-LAST:event_btnListarActionPerformed
@@ -317,31 +322,21 @@ public class ListaContactos extends javax.swing.JFrame {
         int selectedRow = jTListContac.getSelectedRow();
 
         if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+            Object idObject = jTListContac.getValueAt(selectedRow, 0);
 
-            // Buscar el contacto por nombre
-            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
-            Contacto contactoAEliminar = null;
-
-            for (Contacto contacto : listaContactos) {
-                if (contacto.getNombre().equals(nombreContacto)) {
-                    contactoAEliminar = contacto;
-                    break;
-                }
-            }
-
-            if (contactoAEliminar != null) {
-                int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar a " + nombreContacto + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-                if (opcion == JOptionPane.YES_OPTION) {
-                    contactoDAO.eliminarContacto(contactoAEliminar.getIdContacto());
-
-                    // Actualizar la tabla
+            int idContacto = (Integer) idObject;
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar este contacto?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                boolean eliminado = contactoDAO.eliminarContacto(idContacto);
+                if (eliminado) {
                     DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
                     model.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(this, "Contacto y relaciones eliminados exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo eliminar el contacto.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontró el contacto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -351,18 +346,20 @@ public class ListaContactos extends javax.swing.JFrame {
         int selectedRow = jTListContac.getSelectedRow();
 
         if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
 
-            // Buscar el contacto por nombre (considera utilizar un identificador único en lugar del nombre)
-            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
+            Object idObject = jTListContac.getValueAt(selectedRow, 0);
 
-            for (Contacto contacto : listaContactos) {
-                if (contacto.getNombre().equals(nombreContacto)) {
-                    EditarContacto editarContacto = new EditarContacto(contacto);
-                    editarContacto.setVisible(true);
-                    dispose();
-                    break;
-                }
+            int idContacto = (Integer) idObject;
+
+            // Obtener el contacto por ID desde el DAO
+            Contacto contactoSeleccionado = contactoDAO.obtenerContactoPorId(idContacto);
+
+            if (contactoSeleccionado != null) {
+                EditarContacto editarContacto = new EditarContacto(contactoSeleccionado);
+                editarContacto.setVisible(true);
+                dispose(); 
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el contacto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -373,16 +370,27 @@ public class ListaContactos extends javax.swing.JFrame {
         int selectedRow = jTListContac.getSelectedRow();
 
         if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+            Object idObject = jTListContac.getValueAt(selectedRow, 0);
 
+            int idContacto = (Integer) idObject;
+
+            Contacto contactoSeleccionado = null;
             List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
 
             for (Contacto contacto : listaContactos) {
-                if (contacto.getNombre().equals(nombreContacto)) {
-                    mostrarDetalleContacto(contacto); // Mostrar los datos del contacto seleccionado
+                if (contacto.getIdContacto() == idContacto) {
+                    contactoSeleccionado = contacto;
                     break;
                 }
             }
+
+            if (contactoSeleccionado != null) {
+                // Mostrar detalle del contacto seleccionado en la interfaz
+                mostrarDetalleContacto(contactoSeleccionado);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el contacto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jTListContacMouseClicked
 

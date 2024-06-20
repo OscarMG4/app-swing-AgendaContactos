@@ -1,6 +1,7 @@
 package u23238340.proyect.contact.book.model;
 
 public class Telefono {
+
     private int idTelefono;
     private int idContacto;
     private String telefono;
@@ -12,6 +13,18 @@ public class Telefono {
     public Telefono(int idTelefono, int idContacto, String telefono, String tipoTelefono) {
         this.idTelefono = idTelefono;
         this.idContacto = idContacto;
+        this.telefono = telefono;
+        this.tipoTelefono = tipoTelefono;
+    }
+
+    public Telefono(int idTelefono, String telefono, String tipoTelefono) {
+        this.idTelefono = idTelefono;
+        this.telefono = telefono;
+        this.tipoTelefono = tipoTelefono;
+    }
+
+    public Telefono(String telefono, String tipoTelefono) {
+        this.idTelefono = idTelefono;
         this.telefono = telefono;
         this.tipoTelefono = tipoTelefono;
     }
@@ -50,11 +63,11 @@ public class Telefono {
 
     @Override
     public String toString() {
-        return "Telefono{" +
-                "idTelefono=" + idTelefono +
-                ", idContacto=" + idContacto +
-                ", telefono='" + telefono + '\'' +
-                ", tipoTelefono='" + tipoTelefono + '\'' +
-                '}';
+        return "Telefono{"
+                + "idTelefono=" + idTelefono
+                + ", idContacto=" + idContacto
+                + ", telefono='" + telefono + '\''
+                + ", tipoTelefono='" + tipoTelefono + '\''
+                + '}';
     }
 }

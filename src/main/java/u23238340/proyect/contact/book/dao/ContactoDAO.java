@@ -5,6 +5,8 @@ import u23238340.proyect.contact.book.model.Contacto;
 
 import javax.swing.*;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +45,8 @@ public class ContactoDAO {
         }
     }
 
-    public void actualizarContacto(Contacto contacto, String calle, String ciudad, String pais, String telefono, String tipoTelefono) {
-        String sqlUpdate = "{CALL actualizarContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    public void actualizarContacto(Contacto contacto) {
+        String sqlUpdate = "{CALL actualizarContactoDetallado(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
         try (CallableStatement pstmt = connection.prepareCall(sqlUpdate)) {
             pstmt.setInt(1, contacto.getIdContacto());
@@ -54,11 +56,8 @@ public class ContactoDAO {
             pstmt.setBytes(5, contacto.getFoto());
             pstmt.setString(6, contacto.getNota());
             pstmt.setDate(7, new java.sql.Date(contacto.getCumpleanios().getTime()));
-            pstmt.setString(8, calle);
-            pstmt.setString(9, ciudad);
-            pstmt.setString(10, pais);
-            pstmt.setString(11, telefono);
-            pstmt.setString(12, tipoTelefono);
+            pstmt.setString(8, contacto.getDireccion()); // Se pasa la dirección directamente
+            pstmt.setString(9, contacto.getTelefonos()); // Se pasa el string formateado de teléfonos
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -71,45 +70,42 @@ public class ContactoDAO {
         }
     }
 
-    public void eliminarContacto(int idContacto) {
-        String sqlDelete = "DELETE FROM contactos WHERE id_contacto = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sqlDelete)) {
-            pstmt.setInt(1, idContacto);
-
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Contacto eliminado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el contacto con el ID especificado.");
-            }
-
+    public boolean eliminarContacto(int idContacto) {
+        try (CallableStatement stmt = connection.prepareCall("{CALL eliminarContacto(?)}")) {
+            stmt.setInt(1, idContacto);
+            stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el contacto: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public List<Contacto> obtenerContactos() {
-        List<Contacto> contactos = new ArrayList<>();
-        String sqlSelect = "SELECT * FROM contactos";
+    public Contacto obtenerContactoPorId(int idContacto) {
+        Contacto contacto = null;
+        String query = "{CALL obtenerContactoPorId(?)}";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sqlSelect); ResultSet rs = pstmt.executeQuery()) {
+        try (CallableStatement stmt = connection.prepareCall(query)) {
+            stmt.setInt(1, idContacto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String nombre = rs.getString("nombre_contacto");
+                    String email = rs.getString("email");
+                    Date cumpleanios = rs.getDate("cumpleanios");
+                    byte[] foto = rs.getBytes("foto");
+                    String nota = rs.getString("nota");
+                    String direccion = rs.getString("direccion");
+                    String telefonos = rs.getString("telefonos");
 
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String email = rs.getString("email");
-                byte[] foto = rs.getBytes("foto");
-                String nota = rs.getString("nota");
-
-                Contacto contacto = new Contacto(nombre, email, null, foto, nota, null, null);
-                contactos.add(contacto);
+                    // Crear el objeto Contacto con todos los datos, incluyendo el ID
+                    contacto = new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
+                }
             }
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener los contactos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener el contacto por ID: " + e.getMessage());
         }
 
-        return contactos;
+        return contacto;
     }
 
     public List<Contacto> obtenerContactosDetallados() {
@@ -118,6 +114,7 @@ public class ContactoDAO {
 
         try (CallableStatement stmt = connection.prepareCall(query); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
+                int idContacto = rs.getInt("id_contacto"); // Obtener el ID del contacto
                 String nombre = rs.getString("nombre_contacto");
                 String email = rs.getString("email");
                 Date cumpleanios = rs.getDate("cumpleanios");
@@ -126,8 +123,7 @@ public class ContactoDAO {
                 String direccion = rs.getString("direccion");
                 String telefonos = rs.getString("telefonos");
 
-                // Crear el objeto Contacto y agregarlo a la lista
-                Contacto contacto = new Contacto(nombre, email, cumpleanios, foto, nota, direccion, telefonos);
+                Contacto contacto = new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
                 contactos.add(contacto);
             }
         } catch (SQLException e) {
@@ -136,4 +132,5 @@ public class ContactoDAO {
 
         return contactos;
     }
+
 }
