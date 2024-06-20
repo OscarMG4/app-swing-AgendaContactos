@@ -1,19 +1,18 @@
 package u23238340.proyect.contact.book.gui;
 
-//import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import u23238340.proyect.contact.book.dao.ContactoDAO;
+import u23238340.proyect.contact.book.model.Contacto;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import u23238340.proyect.contact.book.dao.Contacto;
-//import u23238340.proyect.contact.book.dao.ContactosData;
+import java.util.List;
 
 public class ListaContactos extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
     private static ListaContactos instance = null;
+    private ContactoDAO contactoDAO;
 
     public static ListaContactos getInstance() {
         if (instance == null) {
@@ -21,15 +20,14 @@ public class ListaContactos extends javax.swing.JFrame {
         }
         return instance;
     }
-    //ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
 
     public ListaContactos() {
         initComponents();
         modelo.addColumn("Seleccione");
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
-        inicializarContactos();
         ocultarJLabels();
+        contactoDAO = new ContactoDAO(); // Inicializar ContactoDAO
     }
 
     private void ocultarJLabels() {
@@ -43,11 +41,13 @@ public class ListaContactos extends javax.swing.JFrame {
 
     private void mostrarDetalleContacto(Contacto contacto) {
         jLabelNombre.setText(contacto.getNombre());
-        jLabelNum.setText(contacto.getNumero());
-        jLabel11Correo.setText(contacto.getCorreo());
+        jLabelNum.setText(contacto.getTelefonos());
+        jLabel11Correo.setText(contacto.getEmail());
         jLabelDireccion.setText(contacto.getDireccion());
-        jLabelCumple.setText(contacto.getCumpleanios());
-        jLabelNotas.setText(contacto.getNotas());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaCumpleanios = dateFormat.format(contacto.getCumpleanios());
+        jLabelCumple.setText(fechaCumpleanios);
+        jLabelNotas.setText(contacto.getNota());
 
         jLabelNombre.setVisible(true);
         jLabelNum.setVisible(true);
@@ -55,10 +55,6 @@ public class ListaContactos extends javax.swing.JFrame {
         jLabelDireccion.setVisible(true);
         jLabelCumple.setVisible(true);
         jLabelNotas.setVisible(true);
-    }
-
-    private void inicializarContactos() {
- //     ContactosData contactosData = new ContactosData();
     }
 
     @SuppressWarnings("unchecked")
@@ -298,24 +294,17 @@ public class ListaContactos extends javax.swing.JFrame {
 
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTListContac.getModel(); //limpiar la tabla
+        DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
         model.setRowCount(0);
 
         ocultarJLabels();
 
-        //List<Contacto> listaOrdenada = new ArrayList<>(ContactosData.listaContactos);
+        List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
 
-        //Collections.sort(listaOrdenada, new Comparator<Contacto>() {
-            //@Override
-            //public int compare(Contacto c1, Contacto c2) {
-                //return c1.getNombre().compareToIgnoreCase(c2.getNombre());
-            //}
-        //});
-
-        //for (Contacto contacto : listaOrdenada) {
-            //Object[] rowData = {contacto.getNombre()};
-            //model.addRow(rowData);
-        //}
+        for (Contacto contacto : listaContactos) {
+            Object[] rowData = {contacto.getNombre()};
+            model.addRow(rowData);
+        }
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -325,61 +314,77 @@ public class ListaContactos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        //int selectedRow = jTListContac.getSelectedRow();
+        int selectedRow = jTListContac.getSelectedRow();
 
-       // if (selectedRow != -1) {
-            //String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+        if (selectedRow != -1) {
+            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
 
-            //int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar a " + nombreContacto + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-           // if (opcion == JOptionPane.YES_OPTION) {
-                //for (Contacto contacto : ContactosData.listaContactos) {
-                    //if (contacto.getNombre().equals(nombreContacto)) {
-                        //ContactosData.listaContactos.remove(contacto);
-                        //break;
-                    //}
-                //}
+            // Buscar el contacto por nombre
+            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
+            Contacto contactoAEliminar = null;
 
-                //DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
-                //model.removeRow(selectedRow);
-            //}
-        } //else {
-            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        //}
+            for (Contacto contacto : listaContactos) {
+                if (contacto.getNombre().equals(nombreContacto)) {
+                    contactoAEliminar = contacto;
+                    break;
+                }
+            }
+
+            if (contactoAEliminar != null) {
+                int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar a " + nombreContacto + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    contactoDAO.eliminarContacto(contactoAEliminar.getIdContacto());
+
+                    // Actualizar la tabla
+                    DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
+                    model.removeRow(selectedRow);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el contacto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jTListContacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTListContacMouseClicked
-//        int selectedRow = jTListContac.getSelectedRow();
-//
-//        if (selectedRow != -1) {
-//            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
-//
-//            for (Contacto contacto : ContactosData.listaContactos) {
-//                if (contacto.getNombre().equals(nombreContacto)) {
-//                    mostrarDetalleContacto(contacto); // Mostrar los datos del contacto seleccionado
-//                    break;
-//                }
-//            }
-//        }
-    }//GEN-LAST:event_jTListContacMouseClicked
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//        int selectedRow = jTListContac.getSelectedRow();
-//
-//        if (selectedRow != -1) {
-//            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
-//
-//            for (Contacto contacto : ContactosData.listaContactos) {
-//                if (contacto.getNombre().equals(nombreContacto)) {
-//                    EditarContacto editarContacto = new EditarContacto(contacto);
-//                    editarContacto.setVisible(true);
-//                    dispose();
-//                    break;
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        int selectedRow = jTListContac.getSelectedRow();
+
+        if (selectedRow != -1) {
+            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+
+            // Buscar el contacto por nombre (considera utilizar un identificador único en lugar del nombre)
+            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
+
+            for (Contacto contacto : listaContactos) {
+                if (contacto.getNombre().equals(nombreContacto)) {
+                    EditarContacto editarContacto = new EditarContacto(contacto);
+                    editarContacto.setVisible(true);
+                    dispose();
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void jTListContacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTListContacMouseClicked
+        int selectedRow = jTListContac.getSelectedRow();
+
+        if (selectedRow != -1) {
+            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+
+            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
+
+            for (Contacto contacto : listaContactos) {
+                if (contacto.getNombre().equals(nombreContacto)) {
+                    mostrarDetalleContacto(contacto); // Mostrar los datos del contacto seleccionado
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_jTListContacMouseClicked
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

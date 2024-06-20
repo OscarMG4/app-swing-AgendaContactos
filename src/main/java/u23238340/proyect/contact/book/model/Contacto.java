@@ -1,24 +1,25 @@
 package u23238340.proyect.contact.book.model;
 
+import java.sql.Date;
+
 public class Contacto {
+
     private int idContacto;
     private int idUsuario;
     private String nombre;
     private String email;
-    private String cumpleanios;
+    private Date cumpleanios;
     private byte[] foto;
     private String nota;
-    private String direccion; 
-    private String telefonos; 
+    private String direccion;
+    private String telefonos;
 
     // Constructor vacío necesario para algunas operaciones
     public Contacto() {
     }
 
-    // Constructor completo para inicializar todos los campos
-    public Contacto(int idContacto, int idUsuario, String nombre, String email, String cumpleanios, byte[] foto, String nota, String direccion, String telefonos) {
-        this.idContacto = idContacto;
-        this.idUsuario = idUsuario;
+    // Constructor con los parámetros necesarios
+    public Contacto(String nombre, String email, Date cumpleanios, byte[] foto, String nota, String direccion, String telefonos) {
         this.nombre = nombre;
         this.email = email;
         this.cumpleanios = cumpleanios;
@@ -61,11 +62,11 @@ public class Contacto {
         this.email = email;
     }
 
-    public String getCumpleanios() {
+    public Date getCumpleanios() {
         return cumpleanios;
     }
 
-    public void setCumpleanios(String cumpleanios) {
+    public void setCumpleanios(Date cumpleanios) {
         this.cumpleanios = cumpleanios;
     }
 
@@ -103,16 +104,16 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return "Contacto{" +
-                "idContacto=" + idContacto +
-                ", idUsuario=" + idUsuario +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", cumpleanios='" + cumpleanios + '\'' +
-                ", foto=" + (foto == null ? "null" : "byte[" + foto.length + "]") +
-                ", nota='" + nota + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", telefonos='" + telefonos + '\'' +
-                '}';
+        return "Contacto{"
+                + "idContacto=" + idContacto
+                + ", idUsuario=" + idUsuario
+                + ", nombre='" + nombre + '\''
+                + ", email='" + email + '\''
+                + ", cumpleanios='" + cumpleanios + '\''
+                + ", foto=" + (foto == null ? "null" : "byte[" + foto.length + "]")
+                + ", nota='" + nota + '\''
+                + ", direccion='" + direccion + '\''
+                + ", telefonos='" + telefonos + '\''
+                + '}';
     }
 }
