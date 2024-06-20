@@ -6,8 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import u23238340.proyect.contact.book.data.Contacto;
-import u23238340.proyect.contact.book.data.ContactosData;
+//import u23238340.proyect.contact.book.model.Contacto;
+//import u23238340.proyect.contact.book.dao.ContactosData;
 
 public class AgregarContacto extends javax.swing.JFrame {
 
@@ -292,8 +292,8 @@ public class AgregarContacto extends javax.swing.JFrame {
             String cumpleanios = jTCumpleanios.getText();
             String notas = JTNota.getText();
 
-            Contacto nuevoContacto = new Contacto(nombre, numero, correo, direccion, cumpleanios, notas);
-            ContactosData.listaContactos.add(nuevoContacto);
+            //Contacto nuevoContacto = new Contacto(nombre, numero, correo, direccion, cumpleanios, notas);
+            //ContactosData.listaContactos.add(nuevoContacto);
             limpiar();
             JOptionPane.showMessageDialog(this, "Contacto guardado exitosamente.");
 

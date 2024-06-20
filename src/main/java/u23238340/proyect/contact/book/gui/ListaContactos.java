@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import u23238340.proyect.contact.book.data.Contacto;
-import u23238340.proyect.contact.book.data.ContactosData;
+import u23238340.proyect.contact.book.dao.Contacto;
+//import u23238340.proyect.contact.book.dao.ContactosData;
 
 public class ListaContactos extends javax.swing.JFrame {
 
@@ -58,7 +58,7 @@ public class ListaContactos extends javax.swing.JFrame {
     }
 
     private void inicializarContactos() {
-        ContactosData contactosData = new ContactosData();
+ //     ContactosData contactosData = new ContactosData();
     }
 
     @SuppressWarnings("unchecked")
@@ -303,19 +303,19 @@ public class ListaContactos extends javax.swing.JFrame {
 
         ocultarJLabels();
 
-        List<Contacto> listaOrdenada = new ArrayList<>(ContactosData.listaContactos);
+        //List<Contacto> listaOrdenada = new ArrayList<>(ContactosData.listaContactos);
 
-        Collections.sort(listaOrdenada, new Comparator<Contacto>() {
-            @Override
-            public int compare(Contacto c1, Contacto c2) {
-                return c1.getNombre().compareToIgnoreCase(c2.getNombre());
-            }
-        });
+        //Collections.sort(listaOrdenada, new Comparator<Contacto>() {
+            //@Override
+            //public int compare(Contacto c1, Contacto c2) {
+                //return c1.getNombre().compareToIgnoreCase(c2.getNombre());
+            //}
+        //});
 
-        for (Contacto contacto : listaOrdenada) {
-            Object[] rowData = {contacto.getNombre()};
-            model.addRow(rowData);
-        }
+        //for (Contacto contacto : listaOrdenada) {
+            //Object[] rowData = {contacto.getNombre()};
+            //model.addRow(rowData);
+        //}
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -325,60 +325,60 @@ public class ListaContactos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int selectedRow = jTListContac.getSelectedRow();
+        //int selectedRow = jTListContac.getSelectedRow();
 
-        if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+       // if (selectedRow != -1) {
+            //String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
 
-            int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar a " + nombreContacto + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                for (Contacto contacto : ContactosData.listaContactos) {
-                    if (contacto.getNombre().equals(nombreContacto)) {
-                        ContactosData.listaContactos.remove(contacto);
-                        break;
-                    }
-                }
+            //int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres eliminar a " + nombreContacto + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+           // if (opcion == JOptionPane.YES_OPTION) {
+                //for (Contacto contacto : ContactosData.listaContactos) {
+                    //if (contacto.getNombre().equals(nombreContacto)) {
+                        //ContactosData.listaContactos.remove(contacto);
+                        //break;
+                    //}
+                //}
 
-                DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
-                model.removeRow(selectedRow);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+                //DefaultTableModel model = (DefaultTableModel) jTListContac.getModel();
+                //model.removeRow(selectedRow);
+            //}
+        } //else {
+            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        //}
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jTListContacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTListContacMouseClicked
-        int selectedRow = jTListContac.getSelectedRow();
-
-        if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
-
-            for (Contacto contacto : ContactosData.listaContactos) {
-                if (contacto.getNombre().equals(nombreContacto)) {
-                    mostrarDetalleContacto(contacto); // Mostrar los datos del contacto seleccionado
-                    break;
-                }
-            }
-        }
+//        int selectedRow = jTListContac.getSelectedRow();
+//
+//        if (selectedRow != -1) {
+//            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+//
+//            for (Contacto contacto : ContactosData.listaContactos) {
+//                if (contacto.getNombre().equals(nombreContacto)) {
+//                    mostrarDetalleContacto(contacto); // Mostrar los datos del contacto seleccionado
+//                    break;
+//                }
+//            }
+//        }
     }//GEN-LAST:event_jTListContacMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int selectedRow = jTListContac.getSelectedRow();
-
-        if (selectedRow != -1) {
-            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
-
-            for (Contacto contacto : ContactosData.listaContactos) {
-                if (contacto.getNombre().equals(nombreContacto)) {
-                    EditarContacto editarContacto = new EditarContacto(contacto);
-                    editarContacto.setVisible(true);
-                    dispose();
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+//        int selectedRow = jTListContac.getSelectedRow();
+//
+//        if (selectedRow != -1) {
+//            String nombreContacto = (String) jTListContac.getValueAt(selectedRow, 0);
+//
+//            for (Contacto contacto : ContactosData.listaContactos) {
+//                if (contacto.getNombre().equals(nombreContacto)) {
+//                    EditarContacto editarContacto = new EditarContacto(contacto);
+//                    editarContacto.setVisible(true);
+//                    dispose();
+//                    break;
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Por favor, seleccione un contacto para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     public static void main(String args[]) {

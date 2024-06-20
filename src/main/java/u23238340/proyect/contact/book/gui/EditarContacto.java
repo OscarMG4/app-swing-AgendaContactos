@@ -6,8 +6,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import u23238340.proyect.contact.book.data.Contacto;
-import u23238340.proyect.contact.book.data.ContactosData;
+import u23238340.proyect.contact.book.model.Contacto;
+//import u23238340.proyect.contact.book.dao.Contacto;
+//import u23238340.proyect.contact.book.dao.ContactosData;
 
 public class EditarContacto extends javax.swing.JFrame {
 
@@ -19,12 +20,12 @@ public class EditarContacto extends javax.swing.JFrame {
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
 
-        JTNombre.setText(contacto.getNombre());
-        JTNumero.setText(contacto.getNumero());
-        JTCorreo.setText(contacto.getCorreo());
-        JTDireccion.setText(contacto.getDireccion());
-        jTCumpleanios.setText(contacto.getCumpleanios());
-        JTNota.setText(contacto.getNotas());
+//        JTNombre.setText(contacto.getNombre());
+//        JTNumero.setText(contacto.getNumero());
+//        JTCorreo.setText(contacto.getCorreo());
+//        JTDireccion.setText(contacto.getDireccion());
+//        jTCumpleanios.setText(contacto.getCumpleanios());
+//        JTNota.setText(contacto.getNotas());
 
         JTNombre.addKeyListener(new KeyAdapter() {
             @Override
@@ -298,12 +299,12 @@ public class EditarContacto extends javax.swing.JFrame {
             String cumpleanios = jTCumpleanios.getText();
             String notas = JTNota.getText();
 
-            contacto.setNombre(nombre);
-            contacto.setNumero(numero);
-            contacto.setCorreo(correo);
-            contacto.setDireccion(direccion);
-            contacto.setCumpleanios(cumpleanios);
-            contacto.setNotas(notas);
+//            contacto.setNombre(nombre);
+//            contacto.setNumero(numero);
+//            contacto.setCorreo(correo);
+//            contacto.setDireccion(direccion);
+//            contacto.setCumpleanios(cumpleanios);
+//            contacto.setNotas(notas);
 
             JOptionPane.showMessageDialog(this, "Contacto actualizado exitosamente.");
 
