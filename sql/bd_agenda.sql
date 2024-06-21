@@ -1,3 +1,5 @@
+create database db_agenda_contactos;
+
 -- Estructura de tabla para la tabla `usuarios`
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,38 +52,7 @@ CREATE TABLE reportes (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- Insertar datos en la tabla usuarios
-INSERT INTO usuarios (nombre_usuario, contrasena) VALUES
-('oscar', '12345'),
-('aixa', '54321');
 
--- Insertar datos en la tabla contactos
-INSERT INTO contactos (id_usuario, nombre, email, foto, nota) VALUES
-(1, 'John Doe', 'john.doe@example.com', NULL, 'Amigo de la universidad'),
-(2, 'Alice Smith', 'alice.smith@example.com', NULL, 'Colega de trabajo');
-
--- Insertar datos en la tabla direcciones
-INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-VALUES (@last_insert_id, '123 Main St', 'Springfield', 'USA');
-
-INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-VALUES (2, '456 Elm St', 'Shelbyville', 'USA');
-
-
--- Insertar datos en la tabla telefonos
-INSERT INTO telefonos (id_contacto, telefono, tipo_telefono) VALUES
-(1, '555-1234', 'Móvil'),
-(2, '555-5678', 'Trabajo');
-
-UPDATE contactos
-SET cumpleanios = '1980-01-01'
-WHERE id_contacto = 1;
-
-UPDATE contactos
-SET cumpleanios = '1990-02-02'
-WHERE id_contacto = 2;
-
-CALL obtenerContactosDetallados();
 
 CREATE PROCEDURE obtenerContactosDetallados()
 BEGIN
@@ -101,7 +72,6 @@ BEGIN
     GROUP BY
         c.id_contacto;
 END
-
 
 
 CREATE PROCEDURE obtenerContactoPorId(IN p_idContacto INT)
@@ -235,13 +205,13 @@ BEGIN
 
     START TRANSACTION;
     
-    -- Eliminar registros de la tabla telefonos
+    -- Eliminar registros
     DELETE FROM telefonos WHERE id_contacto = idContacto;
 
-    -- Eliminar registros de la tabla direcciones
+    
     DELETE FROM direcciones WHERE id_contacto = idContacto;
 
-    -- Eliminar registro de la tabla contactos
+  
     DELETE FROM contactos WHERE id_contacto = idContacto;
 
     COMMIT;
@@ -251,35 +221,35 @@ END;
 
 
 CALL insertarContacto(
-    1, -- id_usuario
-    'ghjkgh Doe', -- nombre
-    'gjvjjv@example.com', -- email
-    NULL, -- foto (puedes usar un valor BLOB real aquí si lo tienes)
-    'Nota de ejemplo', -- nota
-    '1980-01-01', -- cumpleanios
-    '434 Main St', -- calle
-    'chicla', -- ciudad
-    'USA', -- pais
-    '123-456-7890', -- telefono
-    'móvil' -- tipo_telefono
+    1,
+    'ghjkgh Doe', 
+    'gjvjjv@example.com', 
+    NULL, 
+    'Nota de ejemplo', 
+    '1980-01-01',
+    '434 Main St', 
+    'chicla',
+    'USA', 
+    '123-456-7890', 
+    'móvil'
 );
 
 CALL actualizarContacto(
-    6, -- id_contacto
-    1, -- id_usuario
-    'Jane Doe', -- nombre
-    'janedoe@example.com', -- email
-    NULL, -- foto (puedes usar un valor BLOB real aquí si lo tienes)
-    'Nota actualizada', -- nota
-    '1990-02-02', -- cumpleanios
-    '456 Oak St', -- calle
-    'Springfield', -- ciudad
-    'USA', -- pais
-    '987-654-3210', -- telefono
-    'casa' -- tipo_telefono
+    6,
+    1,
+    'Jane Doe',
+    'janedoe@example.com',
+    NULL,
+    'Nota actualizada',
+    '1990-02-02',
+    '456 Oak St',
+    'Springfield', 
+    'USA', 
+    '987-654-3210',
+    'casa'
 );
 
--- Insertar un contacto con dirección y teléfono
+
 CALL insertarContacto(
 	1, 
 	'Maria Prado', 
@@ -300,6 +270,39 @@ CALL insertarContacto(
 
 CALL eliminarContacto(4);
 
+
+-- Insertar datos en la tabla usuarios
+INSERT INTO usuarios (nombre_usuario, contrasena) VALUES
+('oscar', '12345'),
+('aixa', '54321');
+
+-- Insertar datos en la tabla contactos
+INSERT INTO contactos (id_usuario, nombre, email, foto, nota) VALUES
+(1, 'John Doe', 'john.doe@example.com', NULL, 'Amigo de la universidad'),
+(2, 'Alice Smith', 'alice.smith@example.com', NULL, 'Colega de trabajo');
+
+-- Insertar datos en la tabla direcciones
+INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
+VALUES (@last_insert_id, '123 Main St', 'Springfield', 'USA');
+
+INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
+VALUES (2, '456 Elm St', 'Shelbyville', 'USA');
+
+
+-- Insertar datos en la tabla telefonos
+INSERT INTO telefonos (id_contacto, telefono, tipo_telefono) VALUES
+(1, '555-1234', 'Móvil'),
+(2, '555-5678', 'Trabajo');
+
+UPDATE contactos
+SET cumpleanios = '1980-01-01'
+WHERE id_contacto = 1;
+
+UPDATE contactos
+SET cumpleanios = '1990-02-02'
+WHERE id_contacto = 2;
+
+CALL obtenerContactosDetallados();
 
 
 
