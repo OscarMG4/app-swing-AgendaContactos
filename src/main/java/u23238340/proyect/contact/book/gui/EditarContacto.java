@@ -11,8 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import u23238340.proyect.contact.book.dao.ContactoDAO;
 import u23238340.proyect.contact.book.model.Contacto;
-//import u23238340.proyect.contact.book.dao.Contacto;
-//import u23238340.proyect.contact.book.dao.ContactosData;
+
 
 public class EditarContacto extends javax.swing.JFrame {
 
