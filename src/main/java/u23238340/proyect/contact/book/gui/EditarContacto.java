@@ -11,15 +11,17 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import u23238340.proyect.contact.book.dao.ContactoDAO;
 import u23238340.proyect.contact.book.model.Contacto;
-
+import u23238340.proyect.contact.book.model.Usuario;
 
 public class EditarContacto extends javax.swing.JFrame {
 
     private Contacto contacto;
+    private Usuario usuario;
     private ContactoDAO contactoDAO;
 
-    public EditarContacto(Contacto contacto) {
+    public EditarContacto(Contacto contacto, Usuario usuario) {
         this.contacto = contacto;
+        this.usuario = usuario;
         this.contactoDAO = new ContactoDAO();
         initComponents();
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
@@ -125,6 +127,10 @@ public class EditarContacto extends javax.swing.JFrame {
             }
         });
 
+    }
+
+    EditarContacto(Contacto contactoSeleccionado) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @SuppressWarnings("unchecked")
@@ -271,7 +277,7 @@ public class EditarContacto extends javax.swing.JFrame {
             Timer timer = new Timer(500, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Principal principal = new Principal();
+                    Principal principal = new Principal(usuario);
                     principal.setVisible(true);
                     dispose();
                 }
@@ -298,7 +304,7 @@ public class EditarContacto extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (validarCampos()) {
             // Obtener el contacto completo desde la base de datos para edición
-            Contacto contacto = obtenerContactoParaEdicion(this.contacto.getIdContacto()); // Usar directamente el ID del objeto Contacto
+            Contacto contacto = obtenerContactoParaEdicion(this.contacto.getIdContacto());
 
             if (contacto == null) {
                 JOptionPane.showMessageDialog(this, "No se encontró el contacto con el ID especificado.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -309,14 +315,29 @@ public class EditarContacto extends javax.swing.JFrame {
             contacto.setNombre(JTNombre.getText());
             contacto.setEmail(JTCorreo.getText());
             contacto.setNota(JTNota.getText());
-            contacto.setDireccion(JTDireccion.getText()); // Utilizar JTDireccion para la dirección
-            contacto.setCumpleanios(obtenerFechaCumpleanios()); // Utilizar jTCumpleanios para la fecha de cumpleaños
+            contacto.setDireccion(JTDireccion.getText());
+            contacto.setCumpleanios(obtenerFechaCumpleanios());
+
+            // Usar el usuario logueado para actualizar el contacto
+            contacto.setIdUsuario(usuario.getIdUsuario());
 
             // Llamar al método actualizarContacto del ContactoDAO
             contactoDAO.actualizarContacto(contacto);
 
             // Mostrar mensaje de éxito y cerrar ventana
             JOptionPane.showMessageDialog(this, "Contacto actualizado exitosamente.");
+            //temporizador
+            Timer timer = new Timer(500, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Principal principal = new Principal(usuario);
+                    principal.setVisible(true);
+                    dispose();
+                }
+            });
+
+            timer.setRepeats(false);
+            timer.start();
             dispose(); // Cerrar la ventana de edición después de guardar
         }
     }//GEN-LAST:event_btnGuardarActionPerformed

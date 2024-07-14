@@ -1,13 +1,21 @@
 package u23238340.proyect.contact.book.gui;
 
 import javax.swing.JOptionPane;
+import u23238340.proyect.contact.book.model.Usuario;
 
 public class Principal extends javax.swing.JFrame {
 
-    public Principal() {
+    private Usuario usuarioLogueado;
+
+    public Principal(Usuario usuarioLogueado) {
         initComponents();
+        this.usuarioLogueado = usuarioLogueado; // Guardar el usuario logueado
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
+    }
+
+    private Principal() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @SuppressWarnings("unchecked")
@@ -98,13 +106,13 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListContacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListContacActionPerformed
-        ListaContactos listaContactos = ListaContactos.getInstance();
+        ListaContactos listaContactos = new ListaContactos(usuarioLogueado);
         listaContactos.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnListContacActionPerformed
 
     private void btnAniadirContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAniadirContactoActionPerformed
-        AgregarContacto agregarContacto = new AgregarContacto();
+        AgregarContacto agregarContacto = new AgregarContacto(usuarioLogueado);
         agregarContacto.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAniadirContactoActionPerformed

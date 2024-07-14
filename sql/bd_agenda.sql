@@ -77,7 +77,8 @@ END
 CREATE PROCEDURE obtenerContactoPorId(IN p_idContacto INT)
 BEGIN
     SELECT
-        c.nombre AS nombre_contacto,
+        c.id_contacto,
+        c.nombre,
         c.email,
         c.cumpleanios,
         c.foto,
@@ -89,11 +90,10 @@ BEGIN
         LEFT JOIN direcciones d ON c.id_contacto = d.id_contacto
         LEFT JOIN telefonos t ON c.id_contacto = t.id_contacto
     WHERE
-        c.id_contacto = p_idContacto  -- Utilizamos el parámetro p_idContacto aquí
+        c.id_contacto = p_idContacto 
     GROUP BY
         c.id_contacto;
 END
-
 
 
 CREATE PROCEDURE insertarContacto(
@@ -107,7 +107,8 @@ CREATE PROCEDURE insertarContacto(
     IN p_ciudad VARCHAR(255),
     IN p_pais VARCHAR(255),
     IN p_telefono VARCHAR(20),
-    IN p_tipo_telefono VARCHAR(50)
+    IN p_tipo_telefono VARCHAR(50),
+    IN p_direccion VARCHAR(255) -- Nuevo parámetro para la dirección
 )
 BEGIN
     DECLARE last_insert_id INT;
@@ -126,6 +127,12 @@ BEGIN
     -- Insertar el teléfono asociado al contacto
     INSERT INTO telefonos (id_contacto, telefono, tipo_telefono)
     VALUES (last_insert_id, p_telefono, p_tipo_telefono);
+    
+    -- Opcional: Si deseas guardar la dirección en la tabla contactos
+    UPDATE contactos SET direccion = CONCAT(p_calle, ', ', p_ciudad, ', ', p_pais) WHERE id_contacto = last_insert_id;
+    
+    -- Opcional: Si necesitas devolver algún valor, como el ID del nuevo contacto
+    SELECT last_insert_id AS new_contact_id;
 END
 
 
@@ -146,9 +153,19 @@ BEGIN
     DECLARE v_telefono VARCHAR(20);
     DECLARE v_tipo_telefono VARCHAR(50);
 
+    -- Verificar que el usuario exista antes de actualizar
+    IF NOT EXISTS (SELECT 1 FROM usuarios WHERE id_usuario = p_id_usuario) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El usuario especificado no existe.';
+    END IF;
+
     -- Actualizar el contacto principal
     UPDATE contactos
-    SET id_usuario = p_id_usuario, nombre = p_nombre, email = p_email, foto = p_foto, nota = p_nota, cumpleanios = p_cumpleanios
+    SET id_usuario = p_id_usuario,
+        nombre = p_nombre,
+        email = p_email,
+        foto = p_foto,
+        nota = p_nota,
+        cumpleanios = p_cumpleanios
     WHERE id_contacto = p_id_contacto;
 
     -- Actualizar la dirección asociada al contacto
@@ -161,9 +178,10 @@ BEGIN
             WHERE id_contacto = p_id_contacto;
         ELSE
             INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-            VALUES (p_id_contacto, SUBSTRING_INDEX(p_direccion, ',', 1),
-                                   SUBSTRING_INDEX(SUBSTRING_INDEX(p_direccion, ',', 2), ',', -1),
-                                   SUBSTRING_INDEX(p_direccion, ',', -1));
+            VALUES (p_id_contacto,
+                    SUBSTRING_INDEX(p_direccion, ',', 1),
+                    SUBSTRING_INDEX(SUBSTRING_INDEX(p_direccion, ',', 2), ',', -1),
+                    SUBSTRING_INDEX(p_direccion, ',', -1));
         END IF;
     END IF;
 
@@ -190,7 +208,7 @@ BEGIN
             VALUES (p_id_contacto, v_telefono, v_tipo_telefono);
         END WHILE;
     END IF;
-END
+END;
 
 
 
@@ -216,6 +234,15 @@ BEGIN
 
     COMMIT;
 END;
+
+CREATE PROCEDURE obtenerContactosPorUsuario(
+    IN id_usuario INT
+)
+BEGIN
+    SELECT *
+    FROM contactos
+    WHERE id_usuario = id_usuario;
+end;
 
 
 
@@ -276,6 +303,7 @@ INSERT INTO usuarios (nombre_usuario, contrasena) VALUES
 ('oscar', '12345'),
 ('aixa', '54321');
 
+select * from contactos c ;
 -- Insertar datos en la tabla contactos
 INSERT INTO contactos (id_usuario, nombre, email, foto, nota) VALUES
 (1, 'John Doe', 'john.doe@example.com', NULL, 'Amigo de la universidad'),

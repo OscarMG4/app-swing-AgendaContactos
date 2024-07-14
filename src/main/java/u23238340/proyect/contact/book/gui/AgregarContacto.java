@@ -4,17 +4,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
-//import u23238340.proyect.contact.book.model.Contacto;
-//import u23238340.proyect.contact.book.dao.ContactosData;
+import u23238340.proyect.contact.book.dao.ContactoDAO;
+import u23238340.proyect.contact.book.model.Contacto;
+import u23238340.proyect.contact.book.model.Usuario;
 
 public class AgregarContacto extends javax.swing.JFrame {
 
-    public AgregarContacto() {
+    private Usuario usuario;
+    private ContactoDAO contactoDAO;
+
+    public AgregarContacto(Usuario usuario) {
         initComponents();
+        this.usuario = usuario;
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
+        contactoDAO = new ContactoDAO();
 
         JTNombre.addKeyListener(new KeyAdapter() {
             @Override
@@ -109,6 +117,10 @@ public class AgregarContacto extends javax.swing.JFrame {
             }
         });
 
+    }
+
+    private AgregarContacto() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @SuppressWarnings("unchecked")
@@ -259,7 +271,7 @@ public class AgregarContacto extends javax.swing.JFrame {
             Timer timer = new Timer(500, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Principal principal = new Principal();
+                    Principal principal = new Principal(usuario);
                     principal.setVisible(true);
                     dispose();
                 }
@@ -284,23 +296,33 @@ public class AgregarContacto extends javax.swing.JFrame {
     }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (validarCampos()) {
-            String nombre = JTNombre.getText();
-            String numero = JTNumero.getText();
-            String correo = JTCorreo.getText();
-            String direccion = JTDireccion.getText();
-            String cumpleanios = jTCumpleanios.getText();
-            String notas = JTNota.getText();
-
-            //Contacto nuevoContacto = new Contacto(nombre, numero, correo, direccion, cumpleanios, notas);
-            //ContactosData.listaContactos.add(nuevoContacto);
-            limpiar();
-            JOptionPane.showMessageDialog(this, "Contacto guardado exitosamente.");
-
-            Principal principal = new Principal();
-            principal.setVisible(true);
-            dispose();
+        if (!validarCampos()) {
+            return;
         }
+
+        java.sql.Date cumpleaniosDate = null;
+        try {
+            cumpleaniosDate = new java.sql.Date(new SimpleDateFormat("dd-MM-yyyy").parse(jTCumpleanios.getText()).getTime());
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Por favor, use el formato dd-MM-yyyy.");
+            return;
+        }
+
+        Contacto nuevoContacto = new Contacto();
+        nuevoContacto.setNombre(JTNombre.getText());
+        nuevoContacto.setEmail(JTCorreo.getText());
+        nuevoContacto.setCumpleanios(cumpleaniosDate);
+        nuevoContacto.setNota(JTNota.getText());
+        nuevoContacto.setDireccion(JTDireccion.getText());
+        nuevoContacto.setIdUsuario(usuario.getIdUsuario());
+
+        contactoDAO.insertarContacto(nuevoContacto, JTDireccion.getText(), "", "", JTNumero.getText(), "");
+
+        JOptionPane.showMessageDialog(this, "Contacto guardado exitosamente en la base de datos.");
+        limpiar();
+
+        new Principal(usuario).setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private boolean validarCampos() {

@@ -12,165 +12,98 @@ import u23238340.proyect.contact.book.model.Usuario;
 
 public class UsuarioDAO {
 
+    private final ConexionDB conexionDB;
+
+    public UsuarioDAO() {
+        this.conexionDB = new ConexionDB();
+    }
+
     public void agregarUsuario(Usuario usuario) {
-        ConexionDB conexionDB = new ConexionDB();
-        Connection conn = null;
-
         String sqlInsert = "INSERT INTO usuarios (nombre_usuario, contrasena) VALUES (?, ?)";
-
-        try {
-            conn = conexionDB.establecerConexion();
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsert);
-            pstmt.setString(1, usuario.getNombreUsuario());
-            pstmt.setString(2, usuario.getContrasena());
-
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente.");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al agregar el usuario: " + e.getMessage());
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
-        }
+        executeUpdate(sqlInsert, usuario.getNombreUsuario(), usuario.getContrasena());
     }
 
     public void actualizarUsuario(Usuario usuario) {
-        ConexionDB conexionDB = new ConexionDB();
-        Connection conn = null;
-
         String sqlUpdate = "UPDATE usuarios SET nombre_usuario = ?, contrasena = ? WHERE id_usuario = ?";
-
-        try {
-            conn = conexionDB.establecerConexion();
-            PreparedStatement pstmt = conn.prepareStatement(sqlUpdate);
-            pstmt.setString(1, usuario.getNombreUsuario());
-            pstmt.setString(2, usuario.getContrasena());
-            pstmt.setInt(3, usuario.getIdUsuario());
-
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Usuario actualizado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el usuario con el ID especificado.");
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar el usuario: " + e.getMessage());
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
-        }
+        executeUpdate(sqlUpdate, usuario.getNombreUsuario(), usuario.getContrasena(), usuario.getIdUsuario());
     }
 
     public void eliminarUsuario(int idUsuario) {
-        ConexionDB conexionDB = new ConexionDB();
-        Connection conn = null;
-
         String sqlDelete = "DELETE FROM usuarios WHERE id_usuario = ?";
-
-        try {
-            conn = conexionDB.establecerConexion();
-            PreparedStatement pstmt = conn.prepareStatement(sqlDelete);
-            pstmt.setInt(1, idUsuario);
-
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el usuario con el ID especificado.");
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el usuario: " + e.getMessage());
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
-        }
+        executeUpdate(sqlDelete, idUsuario);
     }
 
     public Usuario obtenerUsuarioPorId(int idUsuario) {
-        ConexionDB conexionDB = new ConexionDB();
-        Connection conn = null;
-        Usuario usuario = null;
-
         String sqlSelect = "SELECT * FROM usuarios WHERE id_usuario = ?";
+        return executeQueryForSingleUsuario(sqlSelect, idUsuario);
+    }
 
-        try {
-            conn = conexionDB.establecerConexion();
-            PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
-            pstmt.setInt(1, idUsuario);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                String nombreUsuario = rs.getString("nombre_usuario");
-                String contrasena = rs.getString("contrasena");
-
-                usuario = new Usuario(idUsuario, nombreUsuario, contrasena);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el usuario: " + e.getMessage());
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
-        }
-
-        return usuario;
+    public Usuario obtenerUsuarioPorNombre(String nombreUsuario) {
+        String sqlSelect = "SELECT * FROM usuarios WHERE nombre_usuario = ?";
+        return executeQueryForSingleUsuario(sqlSelect, nombreUsuario);
     }
 
     public List<Usuario> obtenerTodosUsuarios() {
-        ConexionDB conexionDB = new ConexionDB();
-        Connection conn = null;
-        List<Usuario> usuarios = new ArrayList<>();
-
         String sqlSelect = "SELECT * FROM usuarios";
+        return executeQueryForMultipleUsuarios(sqlSelect);
+    }
 
-        try {
-            conn = conexionDB.establecerConexion();
-            PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
+    private void executeUpdate(String sql, Object... params) {
+        try (
+                Connection conn = conexionDB.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            setParams(pstmt, params);
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(null, "Operación realizada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron registros para actualizar.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
+        }
+    }
+
+    private Usuario executeQueryForSingleUsuario(String sql, Object... params) {
+        try (
+                Connection conn = conexionDB.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            setParams(pstmt, params);
             ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Usuario(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("contrasena")
+                );
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener el usuario: " + e.getMessage());
+        }
+        return null;
+    }
 
+    private List<Usuario> executeQueryForMultipleUsuarios(String sql, Object... params) {
+        List<Usuario> usuarios = new ArrayList<>();
+        try (
+                Connection conn = conexionDB.establecerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            setParams(pstmt, params);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                int idUsuario = rs.getInt("id_usuario");
-                String nombreUsuario = rs.getString("nombre_usuario");
-                String contrasena = rs.getString("contrasena");
-
-                Usuario usuario = new Usuario(idUsuario, nombreUsuario, contrasena);
+                Usuario usuario = new Usuario(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("contrasena")
+                );
                 usuarios.add(usuario);
             }
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al obtener los usuarios: " + e.getMessage());
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
         }
-
         return usuarios;
+    }
+
+    private void setParams(PreparedStatement pstmt, Object... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            pstmt.setObject(i + 1, params[i]);
+        }
     }
 }

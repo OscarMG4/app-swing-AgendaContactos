@@ -7,23 +7,18 @@ import u23238340.proyect.contact.book.model.Contacto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import u23238340.proyect.contact.book.model.Usuario;
 
 public class ListaContactos extends javax.swing.JFrame {
 
     DefaultTableModel modelo = new DefaultTableModel();
     private static ListaContactos instance = null;
     private ContactoDAO contactoDAO;
+    private Usuario usuario;
 
-    public static ListaContactos getInstance() {
-        if (instance == null) {
-            instance = new ListaContactos();
-        }
-        return instance;
-    }
-
-    public ListaContactos() {
+    public ListaContactos(Usuario usuario) {
         initComponents();
-        // Inicializar el modelo de la tabla con las columnas necesarias
+        this.usuario = usuario;
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
@@ -33,6 +28,10 @@ public class ListaContactos extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         ocultarJLabels();
         contactoDAO = new ContactoDAO(); // Inicializar ContactoDAO
+    }
+
+    private ListaContactos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void ocultarJLabels() {
@@ -309,7 +308,8 @@ public class ListaContactos extends javax.swing.JFrame {
 
         ocultarJLabels();
 
-        List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
+        // Obtener lista de contactos del usuario actual
+        List<Contacto> listaContactos = contactoDAO.obtenerContactosPorUsuario(usuario.getIdUsuario());
 
         for (Contacto contacto : listaContactos) {
             Object[] rowData = {contacto.getIdContacto(), contacto.getNombre()};
@@ -318,7 +318,7 @@ public class ListaContactos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Principal principal = new Principal();
+        Principal principal = new Principal(usuario);
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
@@ -360,9 +360,9 @@ public class ListaContactos extends javax.swing.JFrame {
             Contacto contactoSeleccionado = contactoDAO.obtenerContactoPorId(idContacto);
 
             if (contactoSeleccionado != null) {
-                EditarContacto editarContacto = new EditarContacto(contactoSeleccionado);
+                EditarContacto editarContacto = new EditarContacto(contactoSeleccionado, usuario);
                 editarContacto.setVisible(true);
-                dispose(); 
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el contacto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -377,17 +377,21 @@ public class ListaContactos extends javax.swing.JFrame {
         if (selectedRow != -1) {
             Object idObject = jTListContac.getValueAt(selectedRow, 0);
 
-            int idContacto = (Integer) idObject;
-
-            Contacto contactoSeleccionado = null;
-            List<Contacto> listaContactos = contactoDAO.obtenerContactosDetallados();
-
-            for (Contacto contacto : listaContactos) {
-                if (contacto.getIdContacto() == idContacto) {
-                    contactoSeleccionado = contacto;
-                    break;
+            // Asegurarse de que el idObject es de tipo Integer
+            int idContacto = 0;
+            if (idObject instanceof Integer) {
+                idContacto = (Integer) idObject;
+            } else {
+                try {
+                    idContacto = Integer.parseInt(idObject.toString());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "ID de contacto no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
+
+            // Obtener el contacto por ID
+            Contacto contactoSeleccionado = contactoDAO.obtenerContactoPorId(idContacto);
 
             if (contactoSeleccionado != null) {
                 // Mostrar detalle del contacto seleccionado en la interfaz
@@ -395,7 +399,6 @@ public class ListaContactos extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró el contacto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }//GEN-LAST:event_jTListContacMouseClicked
 

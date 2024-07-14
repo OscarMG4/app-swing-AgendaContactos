@@ -10,125 +10,254 @@ import java.util.List;
 
 public class ContactoDAO {
 
-    private Connection connection;
+    private final Connection connection;
 
     public ContactoDAO() {
-        ConexionDB conexionDB = new ConexionDB();
-        connection = conexionDB.establecerConexion();
+        this.connection = new ConexionDB().establecerConexion();
     }
 
     public void insertarContacto(Contacto contacto, String calle, String ciudad, String pais, String telefono, String tipoTelefono) {
-        String sqlInsert = "{CALL insertarContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String sqlInsertContacto = "INSERT INTO contactos (id_usuario, nombre, email, cumpleanios, foto, nota) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlInsertDireccion = "INSERT INTO direcciones (id_contacto, calle, ciudad, pais) VALUES (?, ?, ?, ?)";
+        String sqlInsertTelefono = "INSERT INTO telefonos (id_contacto, telefono, tipo_telefono) VALUES (?, ?, ?)";
 
-        try (CallableStatement pstmt = connection.prepareCall(sqlInsert)) {
-            pstmt.setInt(1, contacto.getIdUsuario());
-            pstmt.setString(2, contacto.getNombre());
-            pstmt.setString(3, contacto.getEmail());
-            pstmt.setBytes(4, contacto.getFoto());
-            pstmt.setString(5, contacto.getNota());
+        try {
+            connection.setAutoCommit(false);  // Start transaction
 
-            // Convertir la fecha de cumpleanios a java.sql.Date
-            pstmt.setDate(6, new java.sql.Date(contacto.getCumpleanios().getTime()));
+            // Insertar el contacto y obtener el ID generado
+            int idContacto = -1;
+            try (PreparedStatement stmt = connection.prepareStatement(sqlInsertContacto, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setInt(1, contacto.getIdUsuario());
+                stmt.setString(2, contacto.getNombre());
+                stmt.setString(3, contacto.getEmail());
+                stmt.setDate(4, new java.sql.Date(contacto.getCumpleanios().getTime()));
+                stmt.setBytes(5, contacto.getFoto());
+                stmt.setString(6, contacto.getNota());
+                stmt.executeUpdate();
 
-            pstmt.setString(7, calle);
-            pstmt.setString(8, ciudad);
-            pstmt.setString(9, pais);
-            pstmt.setString(10, telefono);
-            pstmt.setString(11, tipoTelefono);
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    idContacto = rs.getInt(1);
+                }
+            }
 
-            pstmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Contacto insertado exitosamente.");
+            // Insertar la dirección
+            if (idContacto != -1) {
+                try (PreparedStatement stmt = connection.prepareStatement(sqlInsertDireccion)) {
+                    stmt.setInt(1, idContacto);
+                    stmt.setString(2, calle);
+                    stmt.setString(3, ciudad);
+                    stmt.setString(4, pais);
+                    stmt.executeUpdate();
+                }
+
+                // Insertar el teléfono
+                try (PreparedStatement stmt = connection.prepareStatement(sqlInsertTelefono)) {
+                    stmt.setInt(1, idContacto);
+                    stmt.setString(2, telefono);
+                    stmt.setString(3, tipoTelefono);
+                    stmt.executeUpdate();
+                }
+            }
+
+            connection.commit();  // Commit transaction
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al insertar el contacto: " + e.getMessage());
+            try {
+                connection.rollback();  // Rollback transaction on error
+            } catch (SQLException rollbackEx) {
+                JOptionPane.showMessageDialog(null, "Error al hacer rollback: " + rollbackEx.getMessage());
+            }
+            JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
+        } finally {
+            try {
+                connection.setAutoCommit(true);  // Reset auto-commit mode
+            } catch (SQLException autoCommitEx) {
+                JOptionPane.showMessageDialog(null, "Error al restablecer auto-commit: " + autoCommitEx.getMessage());
+            }
         }
     }
 
     public void actualizarContacto(Contacto contacto) {
         String sqlUpdate = "{CALL actualizarContactoDetallado(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-
-        try (CallableStatement pstmt = connection.prepareCall(sqlUpdate)) {
-            pstmt.setInt(1, contacto.getIdContacto());
-            pstmt.setInt(2, contacto.getIdUsuario());
-            pstmt.setString(3, contacto.getNombre());
-            pstmt.setString(4, contacto.getEmail());
-            pstmt.setBytes(5, contacto.getFoto());
-            pstmt.setString(6, contacto.getNota());
-            pstmt.setDate(7, new java.sql.Date(contacto.getCumpleanios().getTime()));
-            pstmt.setString(8, contacto.getDireccion()); // Se pasa la dirección directamente
-            pstmt.setString(9, contacto.getTelefonos()); // Se pasa el string formateado de teléfonos
-
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Contacto actualizado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el contacto con el ID especificado.");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar el contacto: " + e.getMessage());
-        }
+        executeUpdate(sqlUpdate, contacto.getIdContacto(), contacto.getIdUsuario(), contacto.getNombre(), contacto.getEmail(),
+                contacto.getFoto(), contacto.getNota(), new java.sql.Date(contacto.getCumpleanios().getTime()),
+                contacto.getDireccion(), contacto.getTelefonos());
     }
 
     public boolean eliminarContacto(int idContacto) {
-        try (CallableStatement stmt = connection.prepareCall("{CALL eliminarContacto(?)}")) {
+        String sqlDelete = "{CALL eliminarContacto(?)}";
+        try (CallableStatement stmt = connection.prepareCall(sqlDelete)) {
             stmt.setInt(1, idContacto);
-            stmt.executeUpdate();
-            return true;
+            stmt.execute();
+            return true; // Considera la eliminación exitosa si no se lanzan excepciones
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al eliminar el contacto: " + e.getMessage());
             return false;
         }
     }
 
     public Contacto obtenerContactoPorId(int idContacto) {
-        Contacto contacto = null;
-        String query = "{CALL obtenerContactoPorId(?)}";
-
-        try (CallableStatement stmt = connection.prepareCall(query)) {
+        String sqlSelect = "{CALL obtenerContactoPorId(?)}";
+        try (CallableStatement stmt = connection.prepareCall(sqlSelect)) {
             stmt.setInt(1, idContacto);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    String nombre = rs.getString("nombre_contacto");
-                    String email = rs.getString("email");
-                    Date cumpleanios = rs.getDate("cumpleanios");
-                    byte[] foto = rs.getBytes("foto");
-                    String nota = rs.getString("nota");
-                    String direccion = rs.getString("direccion");
-                    String telefonos = rs.getString("telefonos");
-
-                    // Crear el objeto Contacto con todos los datos, incluyendo el ID
-                    contacto = new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
+                    return extractContactoFromResultSet(rs);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró el contacto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el contacto por ID: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener el contacto: " + e.getMessage());
         }
-
-        return contacto;
+        return null;
     }
 
     public List<Contacto> obtenerContactosDetallados() {
-        List<Contacto> contactos = new ArrayList<>();
-        String query = "{CALL obtenerContactosDetallados()}";
+        String sqlSelect = "{CALL obtenerContactosDetallados()}";
+        return executeQueryForMultipleContactos(sqlSelect);
+    }
 
-        try (CallableStatement stmt = connection.prepareCall(query); ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                int idContacto = rs.getInt("id_contacto"); // Obtener el ID del contacto
-                String nombre = rs.getString("nombre_contacto");
-                String email = rs.getString("email");
-                Date cumpleanios = rs.getDate("cumpleanios");
-                byte[] foto = rs.getBytes("foto");
-                String nota = rs.getString("nota");
-                String direccion = rs.getString("direccion");
-                String telefonos = rs.getString("telefonos");
+    public List<Contacto> obtenerContactosPorUsuario(int idUsuario) {
+        String sqlSelect = "{CALL obtenerContactosPorUsuario(?)}";
+        return executeQueryForMultipleContactos(sqlSelect, idUsuario);
+    }
 
-                Contacto contacto = new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
-                contactos.add(contacto);
+    private int executeUpdate(String sql, Object... params) {
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            setParams(stmt, params);
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    private Contacto executeQueryForSingleContacto(String sql, Object... params) {
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            setParams(stmt, params);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return extractContactoFromResultSet(rs);
+                }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener los contactos detallados: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener el contacto: " + e.getMessage());
         }
+        return null;
+    }
 
+    private List<Contacto> executeQueryForMultipleContactos(String sql, Object... params) {
+        List<Contacto> contactos = new ArrayList<>();
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            setParams(stmt, params);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Contacto contacto = extractContactoFromResultSet(rs);
+                    contactos.add(contacto);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los contactos: " + e.getMessage());
+        }
         return contactos;
     }
 
+    private Contacto extractContactoFromResultSet(ResultSet rs) throws SQLException {
+        int idContacto = rs.getInt("id_contacto");
+        String nombre = rs.getString("nombre");
+        String email = rs.getString("email");
+        Date cumpleanios = rs.getDate("cumpleanios");
+        byte[] foto = rs.getBytes("foto");
+        String nota = rs.getString("nota");
+
+        // Obtener la dirección del contacto
+        String direccion = obtenerDireccion(idContacto);
+
+        // Obtener los teléfonos del contacto y convertirlos a cadena separada por comas
+        String telefonos = obtenerTelefono(idContacto);
+
+        return new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
+    }
+
+    private int insertarDireccion(int idContacto, String calle, String ciudad, String pais) {
+        String sqlInsert = "INSERT INTO direcciones (id_contacto, calle, ciudad, pais) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, idContacto);
+            stmt.setString(2, calle);
+            stmt.setString(3, ciudad);
+            stmt.setString(4, pais);
+            stmt.executeUpdate();
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("No se pudo obtener el ID generado para la dirección.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al insertar dirección: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    private String obtenerTelefono(int idContacto) throws SQLException {
+        StringBuilder telefonos = new StringBuilder();
+        String sql = "SELECT telefono FROM telefonos WHERE id_contacto = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idContacto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    if (telefonos.length() > 0) {
+                        telefonos.append(", ");
+                    }
+                    telefonos.append(rs.getString("telefono"));
+                }
+            }
+        }
+        return telefonos.toString();
+    }
+
+    private String obtenerDireccion(int idContacto) throws SQLException {
+        String sql = "SELECT calle, ciudad, pais FROM direcciones WHERE id_contacto = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idContacto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String calle = rs.getString("calle");
+                    String ciudad = rs.getString("ciudad");
+                    String pais = rs.getString("pais");
+                    return String.format("%s, %s, %s", calle, ciudad, pais);
+                }
+            }
+        }
+        return null;
+    }
+
+    // Método para ejecutar la actualización y obtener la clave generada
+    private int executeUpdateAndGetGeneratedKey(String sql, Object... parameters) {
+        int generatedKey = -1;
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            for (int i = 0; i < parameters.length; i++) {
+                stmt.setObject(i + 1, parameters[i]);
+            }
+
+            stmt.executeUpdate();
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    generatedKey = generatedKeys.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return generatedKey;
+    }
+
+    private void setParams(PreparedStatement pstmt, Object... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            pstmt.setObject(i + 1, params[i]);
+        }
+    }
 }

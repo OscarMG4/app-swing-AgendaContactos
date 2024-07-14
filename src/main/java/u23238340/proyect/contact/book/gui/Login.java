@@ -2,13 +2,13 @@ package u23238340.proyect.contact.book.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JOptionPane;
+import u23238340.proyect.contact.book.dao.UsuarioDAO;
 import u23238340.proyect.contact.book.exception.CredencialesIncorrectasException;
+import u23238340.proyect.contact.book.model.Usuario;
 
 public class Login extends javax.swing.JFrame {
-
+    private Usuario usuarioLogueado;
     public Login() {
         initComponents();
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
@@ -153,7 +153,7 @@ public class Login extends javax.swing.JFrame {
             mostrarMensajeError("Por favor, ingrese contraseña.");
         } else {
             try {
-                validarCredenciales(usuarioIngresado, contraseniaIngresada);
+                usuarioLogueado = validarCredenciales(usuarioIngresado, contraseniaIngresada);
                 mostrarVentanaPrincipal();
                 dispose();
             } catch (CredencialesIncorrectasException ex) {
@@ -162,20 +162,19 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void validarCredenciales(String usuario, String contrasenia) throws CredencialesIncorrectasException {
-        Map<String, String> credenciales = new HashMap<>();
-        credenciales.put("oscar", "root");
-        credenciales.put("aixa", "1234");
+    private Usuario validarCredenciales(String usuario, String contrasenia) throws CredencialesIncorrectasException {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuarioEncontrado = usuarioDAO.obtenerUsuarioPorNombre(usuario);
 
-        String contraseniaCorrecta = credenciales.getOrDefault(usuario, "");
-
-        if (!credenciales.containsKey(usuario) || !contraseniaCorrecta.equals(contrasenia)) {
+        if (usuarioEncontrado == null || !usuarioEncontrado.getContrasena().equals(contrasenia)) {
             throw new CredencialesIncorrectasException("Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.");
         }
+
+        return usuarioEncontrado;
     }
 
     private void mostrarVentanaPrincipal() {
-        Principal principal = new Principal();
+        Principal principal = new Principal(usuarioLogueado);
         principal.setVisible(true);
     }
 
