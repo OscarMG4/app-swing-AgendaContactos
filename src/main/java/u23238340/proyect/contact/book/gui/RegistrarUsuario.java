@@ -4,12 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import u23238340.proyect.contact.book.dao.UsuarioDAO;
-import u23238340.proyect.contact.book.exception.CredencialesIncorrectasException;
 import u23238340.proyect.contact.book.model.Usuario;
 
 public class RegistrarUsuario extends javax.swing.JFrame {
-
-    private Usuario usuarioLogueado;
 
     public RegistrarUsuario() {
         initComponents();
