@@ -14,11 +14,9 @@ public class Contacto {
     private String direccion;
     private String telefonos;
 
-    // Constructor vacío necesario para algunas operaciones
     public Contacto() {
     }
 
-    // Constructor para crear un Contacto sin ID inicialmente
     public Contacto(int idContacto, String nombre, String email, Date cumpleanios, byte[] foto, String nota, String direccion, String telefonos) {
         this.idContacto = idContacto;
         this.nombre = nombre;
@@ -30,7 +28,6 @@ public class Contacto {
         this.telefonos = telefonos;
     }
 
-    // Getters y setters para todos los campos
     public int getIdContacto() {
         return idContacto;
     }

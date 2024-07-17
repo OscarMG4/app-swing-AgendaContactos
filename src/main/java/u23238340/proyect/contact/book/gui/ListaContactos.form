@@ -3,6 +3,12 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="b8" green="9c" red="0" type="rgb"/>
+    </Property>
+    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="b8" green="9c" red="0" type="rgb"/>
+    </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -24,77 +30,70 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="116" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="b8" green="9c" red="0" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="b8" green="9c" red="0" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnListar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelDetalle" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnListar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelDetalle" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
                                   <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
                                   <Component id="jLabelNom" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
                                   <Component id="jLabelNumero" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
                                   <Component id="jLabelCorreo" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                                   <Component id="jLabelDirec" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabelCumpleanios" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Component id="jLabelCumpleanios" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                                   <Component id="jLabelNota" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="57" max="32767" attributes="0"/>
-                          <Component id="btnVolver" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabelNum" min="-2" max="-2" attributes="0"/>
@@ -103,9 +102,18 @@
                               <Component id="jLabelCumple" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabelNotas" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="286" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                  <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="btnVolver" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -118,42 +126,49 @@
                       <Component id="btnListar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                          <Component id="jLabelDetalle" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                          <Component id="jLabelNom" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="jLabelNumero" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="jLabelCorreo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="jLabelDirec" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="jLabelCumpleanios" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="jLabelNota" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="381" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-                          <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabelNum" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabel11Correo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabelDireccion" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabelCumple" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jLabelNotas" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                          <Component id="jLabelDetalle" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabelNom" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jLabelNumero" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jLabelCorreo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jLabelDirec" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabelCumpleanios" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelCumple" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabelNota" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelNotas" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                  <Component id="jLabelNum" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                                  <Component id="jLabel11Correo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="jLabelDireccion" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnVolver" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -168,15 +183,24 @@
         <Component class="javax.swing.JLabel" name="jLabelTitulo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Segoe UI" size="22" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="- Lista de contactos -"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="30" green="2a" red="0" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
@@ -186,8 +210,14 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEliminar">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="30" green="2a" red="0" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
           </Properties>
@@ -197,8 +227,14 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnVolver">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="30" green="2a" red="0" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="volver"/>
           </Properties>
@@ -209,7 +245,10 @@
         <Component class="javax.swing.JLabel" name="jLabelDetalle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="16" style="0"/>
+              <Font name="Segoe UI" size="22" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Detalle:"/>
           </Properties>
@@ -217,7 +256,10 @@
         <Component class="javax.swing.JLabel" name="jLabelNom">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
@@ -225,7 +267,10 @@
         <Component class="javax.swing.JLabel" name="jLabelNumero">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero:"/>
           </Properties>
@@ -233,7 +278,10 @@
         <Component class="javax.swing.JLabel" name="jLabelCorreo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Correo:"/>
           </Properties>
@@ -241,7 +289,10 @@
         <Component class="javax.swing.JLabel" name="jLabelDirec">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Direcci&#xf3;n:"/>
           </Properties>
@@ -249,7 +300,10 @@
         <Component class="javax.swing.JLabel" name="jLabelCumpleanios">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cumplea&#xf1;os:"/>
           </Properties>
@@ -257,38 +311,77 @@
         <Component class="javax.swing.JLabel" name="jLabelNota">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Notas:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabelNombre"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNum">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabelNum"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11Correo">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabel11Correo"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDireccion">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabelDireccion"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCumple">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabelCumple"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNotas">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="16" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabelNotas"/>
           </Properties>
         </Component>
@@ -315,8 +408,14 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnListar">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="30" green="2a" red="0" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Listar"/>
           </Properties>

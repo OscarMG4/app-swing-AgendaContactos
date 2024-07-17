@@ -1,0 +1,6 @@
+EJECUTAR EN EL SIGUIENTE ORDEN ESPECÍFICO:
+
+1 - tablas.sql
+2 - procedimientos_almacenados.sql
+3 - triggers.sql
+4 - datos_de_prueba.sql

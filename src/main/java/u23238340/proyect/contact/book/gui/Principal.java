@@ -9,12 +9,12 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal(Usuario usuarioLogueado) {
         initComponents();
-        this.usuarioLogueado = usuarioLogueado; // Guardar el usuario logueado
+        this.usuarioLogueado = usuarioLogueado;
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
     }
 
-    private Principal() {
+    private Principal() {  
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -27,14 +27,21 @@ public class Principal extends javax.swing.JFrame {
         btnListContac = new javax.swing.JButton();
         btnAniadirContacto = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabelTitulo.setText("GESTOR DE CONTACTOS");
+        jPanel1.setBackground(new java.awt.Color(0, 156, 184));
+        jPanel1.setForeground(new java.awt.Color(0, 156, 184));
 
-        btnListContac.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTitulo.setText("Bienvenid@");
+
+        btnListContac.setBackground(new java.awt.Color(0, 42, 48));
+        btnListContac.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnListContac.setForeground(new java.awt.Color(255, 255, 255));
         btnListContac.setText("Lista de Contactos");
         btnListContac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -42,7 +49,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnAniadirContacto.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnAniadirContacto.setBackground(new java.awt.Color(0, 42, 48));
+        btnAniadirContacto.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnAniadirContacto.setForeground(new java.awt.Color(255, 255, 255));
         btnAniadirContacto.setText("Añadir Contacto");
         btnAniadirContacto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,11 +59,23 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.setBackground(new java.awt.Color(0, 42, 48));
+        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesion.setText("<=");
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarSesionActionPerformed(evt);
+            }
+        });
+
+        btnReporte.setBackground(new java.awt.Color(0, 42, 48));
+        btnReporte.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporte.setText("Reportes");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
             }
         });
 
@@ -65,30 +86,35 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
+                        .addGap(256, 256, 256)
                         .addComponent(jLabelTitulo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
+                        .addGap(269, 269, 269)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAniadirContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnListContac, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(315, 315, 315)
+                        .addComponent(btnCerrarSesion))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(293, 293, 293)
-                        .addComponent(btnCerrarSesion)))
-                .addContainerGap(238, Short.MAX_VALUE))
+                        .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(50, 50, 50)
                 .addComponent(jLabelTitulo)
-                .addGap(54, 54, 54)
+                .addGap(51, 51, 51)
                 .addComponent(btnListContac)
-                .addGap(34, 34, 34)
+                .addGap(32, 32, 32)
                 .addComponent(btnAniadirContacto)
                 .addGap(35, 35, 35)
-                .addComponent(btnCerrarSesion)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addComponent(btnReporte)
+                .addGap(51, 51, 51)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,7 +125,9 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,6 +153,12 @@ public class Principal extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        ReporteDeUsuario reporte = new ReporteDeUsuario(usuarioLogueado);
+        reporte.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnReporteActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -155,6 +189,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnAniadirContacto;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnListContac;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

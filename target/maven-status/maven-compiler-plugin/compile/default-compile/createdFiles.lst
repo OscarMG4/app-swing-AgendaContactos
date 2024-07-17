@@ -7,6 +7,7 @@ u23238340\proyect\contact\book\model\Reporte.class
 u23238340\proyect\contact\book\gui\EditarContacto$2.class
 u23238340\proyect\contact\book\gui\Principal$3.class
 u23238340\proyect\contact\book\dao\ContactoDAO.class
+u23238340\proyect\contact\book\gui\ReporteDeUsuario$2.class
 u23238340\proyect\contact\book\gui\AgregarContacto$12.class
 u23238340\proyect\contact\book\gui\Login$5.class
 u23238340\proyect\contact\book\gui\ListaContactos$5.class
@@ -24,11 +25,14 @@ u23238340\proyect\contact\book\gui\Login$1.class
 u23238340\proyect\contact\book\gui\EditarContacto$9.class
 u23238340\proyect\contact\book\gui\ListaContactos$4.class
 u23238340\proyect\contact\book\gui\Principal$2.class
+u23238340\proyect\contact\book\gui\Principal$5.class
+u23238340\proyect\contact\book\gui\ReporteDeUsuario$1.class
 u23238340\proyect\contact\book\gui\Login$4.class
 u23238340\proyect\contact\book\gui\AgregarContacto$3.class
 u23238340\proyect\contact\book\gui\EditarContacto$6.class
 u23238340\proyect\contact\book\ProyectContactBook.class
 u23238340\proyect\contact\book\gui\ListaContactos$7.class
+u23238340\proyect\contact\book\gui\ReporteDeUsuario.class
 u23238340\proyect\contact\book\gui\Login$3.class
 u23238340\proyect\contact\book\gui\AgregarContacto$11.class
 u23238340\proyect\contact\book\gui\AgregarContacto$4.class
@@ -61,6 +65,7 @@ u23238340\proyect\contact\book\model\Usuario.class
 u23238340\proyect\contact\book\gui\AgregarContacto$5.class
 u23238340\proyect\contact\book\gui\ListaContactos$3.class
 u23238340\proyect\contact\book\model\Contacto.class
+u23238340\proyect\contact\book\gui\ReporteDeUsuario$3.class
 u23238340\proyect\contact\book\model\Telefono.class
 u23238340\proyect\contact\book\gui\EditarContacto$13.class
 u23238340\proyect\contact\book\dao\TelefonoDAO.class

@@ -1,5 +1,6 @@
 package u23238340.proyect.contact.book.gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -20,6 +21,7 @@ public class AgregarContacto extends javax.swing.JFrame {
     public AgregarContacto(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
+        this.getContentPane().setBackground(new Color(0x00, 0x9C, 0xB8));
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
         contactoDAO = new ContactoDAO();
@@ -145,30 +147,41 @@ public class AgregarContacto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
+        setBackground(new java.awt.Color(0, 156, 184));
+        setForeground(new java.awt.Color(0, 156, 184));
         setResizable(false);
 
-        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         jLabelTitulo.setText("Añadir Contacto");
 
-        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre.setText("Nombre:");
 
-        jLabelNumero.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelNumero.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelNumero.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNumero.setText("Número:");
 
-        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelCorreo.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCorreo.setText("Correo:");
 
-        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelDireccion.setForeground(new java.awt.Color(255, 255, 255));
         jLabelDireccion.setText("Dirección:");
 
-        jLabelCumple.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelCumple.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelCumple.setForeground(new java.awt.Color(255, 255, 255));
         jLabelCumple.setText("Cumpleaños:");
 
-        jLabelNota.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabelNota.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelNota.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNota.setText("Nota:");
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnGuardar.setBackground(new java.awt.Color(0, 42, 48));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +189,9 @@ public class AgregarContacto extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(0, 42, 48));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +231,7 @@ public class AgregarContacto extends javax.swing.JFrame {
                             .addComponent(JTDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JTNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(107, 107, 107)
                 .addComponent(btnGuardar)

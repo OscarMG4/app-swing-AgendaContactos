@@ -29,11 +29,14 @@ public class ConexionDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection(cadena, usuario, contrasena);
-            JOptionPane.showMessageDialog(null, "Conexión Exitosa!");
+            System.out.println("Conexión Exitosa!");
+            //JOptionPane.showMessageDialog(null, "Conexión Exitosa!");
         } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Fallo en la carga del driver: " + e.toString());
+            System.out.println("Fallo en la carga del driver: " + e.toString());
+            //JOptionPane.showMessageDialog(null, "Fallo en la carga del driver: " + e.toString());
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Fallo en la conexión: " + e.toString());
+            System.out.println("Fallo en la conexión: " + e.toString());
+            //JOptionPane.showMessageDialog(null, "Fallo en la conexión: " + e.toString());
         }
         return conectar;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ReporteDAO {
 
-    private Connection connection; 
+    private Connection connection;
 
     public ReporteDAO() {
         ConexionDB conexionDB = new ConexionDB();
@@ -44,7 +44,7 @@ public class ReporteDAO {
 
             while (rs.next()) {
                 int idReporte = rs.getInt("id_reporte");
-                int numContactosTotal = rs.getInt("num_contactos_total");
+                int numContactosTotal = rs.getInt("num_total_contactos");
                 int numContactosEditados = rs.getInt("num_contactos_editados");
                 int numContactosEliminados = rs.getInt("num_contactos_eliminados");
                 int numContactosAgregados = rs.getInt("num_contactos_agregados");

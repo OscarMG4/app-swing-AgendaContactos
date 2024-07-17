@@ -17,64 +17,28 @@ public class ContactoDAO {
     }
 
     public void insertarContacto(Contacto contacto, String calle, String ciudad, String pais, String telefono, String tipoTelefono) {
-        String sqlInsertContacto = "INSERT INTO contactos (id_usuario, nombre, email, cumpleanios, foto, nota) VALUES (?, ?, ?, ?, ?, ?)";
-        String sqlInsertDireccion = "INSERT INTO direcciones (id_contacto, calle, ciudad, pais) VALUES (?, ?, ?, ?)";
-        String sqlInsertTelefono = "INSERT INTO telefonos (id_contacto, telefono, tipo_telefono) VALUES (?, ?, ?)";
+        String sql = "{CALL insertarContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
-        try {
-            connection.setAutoCommit(false);  // Start transaction
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            stmt.setInt(1, contacto.getIdUsuario());
+            stmt.setString(2, contacto.getNombre());
+            stmt.setString(3, contacto.getEmail());
+            stmt.setDate(4, new java.sql.Date(contacto.getCumpleanios().getTime()));
+            stmt.setBytes(5, contacto.getFoto());
+            stmt.setString(6, contacto.getNota());
+            stmt.setString(7, calle);
+            stmt.setString(8, ciudad);
+            stmt.setString(9, pais);
+            stmt.setString(10, telefono);
+            stmt.setString(11, tipoTelefono);
 
-            // Insertar el contacto y obtener el ID generado
-            int idContacto = -1;
-            try (PreparedStatement stmt = connection.prepareStatement(sqlInsertContacto, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setInt(1, contacto.getIdUsuario());
-                stmt.setString(2, contacto.getNombre());
-                stmt.setString(3, contacto.getEmail());
-                stmt.setDate(4, new java.sql.Date(contacto.getCumpleanios().getTime()));
-                stmt.setBytes(5, contacto.getFoto());
-                stmt.setString(6, contacto.getNota());
-                stmt.executeUpdate();
-
-                ResultSet rs = stmt.getGeneratedKeys();
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    idContacto = rs.getInt(1);
+                    rs.getInt(1);
                 }
             }
-
-            // Insertar la dirección
-            if (idContacto != -1) {
-                try (PreparedStatement stmt = connection.prepareStatement(sqlInsertDireccion)) {
-                    stmt.setInt(1, idContacto);
-                    stmt.setString(2, calle);
-                    stmt.setString(3, ciudad);
-                    stmt.setString(4, pais);
-                    stmt.executeUpdate();
-                }
-
-                // Insertar el teléfono
-                try (PreparedStatement stmt = connection.prepareStatement(sqlInsertTelefono)) {
-                    stmt.setInt(1, idContacto);
-                    stmt.setString(2, telefono);
-                    stmt.setString(3, tipoTelefono);
-                    stmt.executeUpdate();
-                }
-            }
-
-            connection.commit();  // Commit transaction
-
         } catch (SQLException e) {
-            try {
-                connection.rollback();  // Rollback transaction on error
-            } catch (SQLException rollbackEx) {
-                JOptionPane.showMessageDialog(null, "Error al hacer rollback: " + rollbackEx.getMessage());
-            }
             JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
-        } finally {
-            try {
-                connection.setAutoCommit(true);  // Reset auto-commit mode
-            } catch (SQLException autoCommitEx) {
-                JOptionPane.showMessageDialog(null, "Error al restablecer auto-commit: " + autoCommitEx.getMessage());
-            }
         }
     }
 
@@ -90,7 +54,7 @@ public class ContactoDAO {
         try (CallableStatement stmt = connection.prepareCall(sqlDelete)) {
             stmt.setInt(1, idContacto);
             stmt.execute();
-            return true; // Considera la eliminación exitosa si no se lanzan excepciones
+            return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar el contacto: " + e.getMessage());
             return false;
@@ -134,20 +98,6 @@ public class ContactoDAO {
         }
     }
 
-    private Contacto executeQueryForSingleContacto(String sql, Object... params) {
-        try (CallableStatement stmt = connection.prepareCall(sql)) {
-            setParams(stmt, params);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return extractContactoFromResultSet(rs);
-                }
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el contacto: " + e.getMessage());
-        }
-        return null;
-    }
-
     private List<Contacto> executeQueryForMultipleContactos(String sql, Object... params) {
         List<Contacto> contactos = new ArrayList<>();
         try (CallableStatement stmt = connection.prepareCall(sql)) {
@@ -172,10 +122,8 @@ public class ContactoDAO {
         byte[] foto = rs.getBytes("foto");
         String nota = rs.getString("nota");
 
-        // Obtener la dirección del contacto
         String direccion = obtenerDireccion(idContacto);
 
-        // Obtener los teléfonos del contacto y convertirlos a cadena separada por comas
         String telefonos = obtenerTelefono(idContacto);
 
         return new Contacto(idContacto, nombre, email, cumpleanios, foto, nota, direccion, telefonos);
@@ -232,27 +180,6 @@ public class ContactoDAO {
             }
         }
         return null;
-    }
-
-    // Método para ejecutar la actualización y obtener la clave generada
-    private int executeUpdateAndGetGeneratedKey(String sql, Object... parameters) {
-        int generatedKey = -1;
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            for (int i = 0; i < parameters.length; i++) {
-                stmt.setObject(i + 1, parameters[i]);
-            }
-
-            stmt.executeUpdate();
-
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    generatedKey = generatedKeys.getInt(1);
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return generatedKey;
     }
 
     private void setParams(PreparedStatement pstmt, Object... params) throws SQLException {

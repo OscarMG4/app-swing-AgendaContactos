@@ -1,58 +1,7 @@
-create database db_agenda_contactos;
+use db_agenda_contactos;
 
--- Estructura de tabla para la tabla `usuarios`
-CREATE TABLE usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_usuario VARCHAR(50) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL
-);
-
--- Estructura de tabla para la tabla `contactos`
-CREATE TABLE contactos (
-    id_contacto INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100),
-    cumpleanios DATE,
-    foto BLOB,
-    nota TEXT,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
-);
-
-
--- Estructura de tabla para la tabla `direcciones`
-CREATE TABLE direcciones (
-    id_direccion INT AUTO_INCREMENT PRIMARY KEY,
-    id_contacto INT,
-    calle VARCHAR(255),
-    ciudad VARCHAR(255),
-    pais VARCHAR(255),
-    FOREIGN KEY (id_contacto) REFERENCES contactos(id_contacto)
-);
-
-
--- Estructura de tabla para la tabla `telefonos`
-CREATE TABLE telefonos (
-    id_telefono INT AUTO_INCREMENT PRIMARY KEY,
-    id_contacto INT NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
-    tipo_telefono VARCHAR(50),
-    FOREIGN KEY (id_contacto) REFERENCES contactos(id_contacto)
-);
-
--- Estructura de tabla para la tabla `reportes`
-CREATE TABLE reportes (
-    id_reporte INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    num_total_contactos INT,
-    num_contactos_editados INT,
-    num_contactos_eliminados INT,
-    num_contactos_agregados INT,
-    fecha_generado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
-);
-
-
+/*PROCEDIMIENTOS ALMACENADOS*/
+/*NOTA: SI TIENE PROBLEMAS PARA EJECUTAR LA HOJA SCRIPT COMPLETA, EJECUTE LOS PROCEDIMIENTOS ALMACENADOS UNO POR UNO*/
 
 CREATE PROCEDURE obtenerContactosDetallados()
 BEGIN
@@ -100,39 +49,44 @@ CREATE PROCEDURE insertarContacto(
     IN p_id_usuario INT,
     IN p_nombre VARCHAR(100),
     IN p_email VARCHAR(100),
+    IN p_cumpleanios DATE,
     IN p_foto BLOB,
     IN p_nota TEXT,
-    IN p_cumpleanios DATE,
     IN p_calle VARCHAR(255),
     IN p_ciudad VARCHAR(255),
     IN p_pais VARCHAR(255),
     IN p_telefono VARCHAR(20),
-    IN p_tipo_telefono VARCHAR(50),
-    IN p_direccion VARCHAR(255) -- Nuevo parámetro para la dirección
+    IN p_tipo_telefono VARCHAR(50)
 )
 BEGIN
-    DECLARE last_insert_id INT;
-    
-    -- Insertar el contacto principal
-    INSERT INTO contactos (id_usuario, nombre, email, foto, nota, cumpleanios)
-    VALUES (p_id_usuario, p_nombre, p_email, p_foto, p_nota, p_cumpleanios);
-    
-    -- Obtener el ID del contacto insertado
-    SET last_insert_id = LAST_INSERT_ID();
-    
-    -- Insertar la dirección asociada al contacto
+    DECLARE id_contacto INT;
+    DECLARE exito BOOLEAN DEFAULT TRUE;
+
+    START TRANSACTION;
+
+    INSERT INTO contactos (id_usuario, nombre, email, cumpleanios, foto, nota)
+    VALUES (p_id_usuario, p_nombre, p_email, p_cumpleanios, p_foto, p_nota);
+
+    -- Obtener el ID generado automáticamente
+    SET id_contacto = LAST_INSERT_ID();
+
     INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-    VALUES (last_insert_id, p_calle, p_ciudad, p_pais);
-    
-    -- Insertar el teléfono asociado al contacto
+    VALUES (id_contacto, p_calle, p_ciudad, p_pais);
+
     INSERT INTO telefonos (id_contacto, telefono, tipo_telefono)
-    VALUES (last_insert_id, p_telefono, p_tipo_telefono);
-    
-    -- Opcional: Si deseas guardar la dirección en la tabla contactos
-    UPDATE contactos SET direccion = CONCAT(p_calle, ', ', p_ciudad, ', ', p_pais) WHERE id_contacto = last_insert_id;
-    
-    -- Opcional: Si necesitas devolver algún valor, como el ID del nuevo contacto
-    SELECT last_insert_id AS new_contact_id;
+    VALUES (id_contacto, p_telefono, p_tipo_telefono);
+
+    IF (ROW_COUNT() = 0) THEN
+        SET exito = FALSE;
+    END IF;
+
+    IF (exito) THEN
+        COMMIT;
+    ELSE
+        ROLLBACK;
+    END IF;
+
+    SELECT id_contacto;
 END
 
 
@@ -223,7 +177,6 @@ BEGIN
 
     START TRANSACTION;
     
-    -- Eliminar registros
     DELETE FROM telefonos WHERE id_contacto = idContacto;
 
     
@@ -235,6 +188,7 @@ BEGIN
     COMMIT;
 END;
 
+
 CREATE PROCEDURE obtenerContactosPorUsuario(
     IN id_usuario INT
 )
@@ -243,94 +197,3 @@ BEGIN
     FROM contactos
     WHERE id_usuario = id_usuario;
 end;
-
-
-
-
-CALL insertarContacto(
-    1,
-    'ghjkgh Doe', 
-    'gjvjjv@example.com', 
-    NULL, 
-    'Nota de ejemplo', 
-    '1980-01-01',
-    '434 Main St', 
-    'chicla',
-    'USA', 
-    '123-456-7890', 
-    'móvil'
-);
-
-CALL actualizarContacto(
-    6,
-    1,
-    'Jane Doe',
-    'janedoe@example.com',
-    NULL,
-    'Nota actualizada',
-    '1990-02-02',
-    '456 Oak St',
-    'Springfield', 
-    'USA', 
-    '987-654-3210',
-    'casa'
-);
-
-
-CALL insertarContacto(
-	1, 
-	'Maria Prado', 
-	'Maria@example.com', 
-	NULL, 
-	'Nota de Carlos',
-	'1994-05-15', 
-	'Calle Principal 123', 
-	'Ciudad Principal', 
-	'Pais Principal', 
-	'123456789', 
-	'Personal'
-);
-
--- Insertar un contacto con foto y sin dirección ni teléfono
-
-
-
-CALL eliminarContacto(4);
-
-
--- Insertar datos en la tabla usuarios
-INSERT INTO usuarios (nombre_usuario, contrasena) VALUES
-('oscar', '12345'),
-('aixa', '54321');
-
-select * from contactos c ;
--- Insertar datos en la tabla contactos
-INSERT INTO contactos (id_usuario, nombre, email, foto, nota) VALUES
-(1, 'John Doe', 'john.doe@example.com', NULL, 'Amigo de la universidad'),
-(2, 'Alice Smith', 'alice.smith@example.com', NULL, 'Colega de trabajo');
-
--- Insertar datos en la tabla direcciones
-INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-VALUES (@last_insert_id, '123 Main St', 'Springfield', 'USA');
-
-INSERT INTO direcciones (id_contacto, calle, ciudad, pais)
-VALUES (2, '456 Elm St', 'Shelbyville', 'USA');
-
-
--- Insertar datos en la tabla telefonos
-INSERT INTO telefonos (id_contacto, telefono, tipo_telefono) VALUES
-(1, '555-1234', 'Móvil'),
-(2, '555-5678', 'Trabajo');
-
-UPDATE contactos
-SET cumpleanios = '1980-01-01'
-WHERE id_contacto = 1;
-
-UPDATE contactos
-SET cumpleanios = '1990-02-02'
-WHERE id_contacto = 2;
-
-CALL obtenerContactosDetallados();
-
-
-
