@@ -1,4 +1,4 @@
-create database db_agenda_contactos;
+-- create database db_agenda_contactos;
 
 use db_agenda_contactos;
 
@@ -6,7 +6,7 @@ use db_agenda_contactos;
 
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_usuario VARCHAR(50) NOT NULL,
+    nombre_usuario VARCHAR(50) NOT null unique,
     contrasena VARCHAR(255) NOT NULL
 );
 

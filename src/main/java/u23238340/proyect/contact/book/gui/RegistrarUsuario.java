@@ -210,14 +210,16 @@ public class RegistrarUsuario extends javax.swing.JFrame {
             nuevoUsuario.setContrasena(contraseniaIngresada);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            usuarioDAO.agregarUsuario(nuevoUsuario);
+            boolean registroExitoso = usuarioDAO.agregarUsuario(nuevoUsuario);
 
-            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            txtUsuario.setText("");
-            txtPass.setText("");
-            txtPass2.setText("");
-            mostrarVentanaPrincipal();
-            dispose();
+            if (registroExitoso) {
+                JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                txtUsuario.setText("");
+                txtPass.setText("");
+                txtPass2.setText("");
+                mostrarVentanaPrincipal();
+                dispose();
+            }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

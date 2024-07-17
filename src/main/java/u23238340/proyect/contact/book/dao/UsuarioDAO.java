@@ -1,5 +1,6 @@
 package u23238340.proyect.contact.book.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,9 +19,27 @@ public class UsuarioDAO {
         this.conexionDB = new ConexionDB();
     }
 
-    public void agregarUsuario(Usuario usuario) {
-        String sqlInsert = "INSERT INTO usuarios (nombre_usuario, contrasena) VALUES (?, ?)";
-        executeUpdate(sqlInsert, usuario.getNombreUsuario(), usuario.getContrasena());
+    public boolean  agregarUsuario(Usuario usuario) {
+        String sqlCall = "{CALL insertarUsuario(?, ?)}";
+
+        try (Connection conn = conexionDB.establecerConexion();
+                 CallableStatement stmt = conn.prepareCall(sqlCall)) {
+
+            stmt.setString(1, usuario.getNombreUsuario());
+            stmt.setString(2, usuario.getContrasena());
+
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente.");
+            return true;
+
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
+            }
+            return false;
+        }
     }
 
     public void actualizarUsuario(Usuario usuario) {

@@ -3,6 +3,26 @@ use db_agenda_contactos;
 /*PROCEDIMIENTOS ALMACENADOS*/
 /*NOTA: SI TIENE PROBLEMAS PARA EJECUTAR LA HOJA SCRIPT COMPLETA, EJECUTE LOS PROCEDIMIENTOS ALMACENADOS UNO POR UNO*/
 
+CREATE PROCEDURE insertarUsuario(
+    IN p_nombre_usuario VARCHAR(50),
+    IN p_contrasena VARCHAR(255)
+)
+BEGIN
+    DECLARE usuario_count INT;
+
+    SELECT COUNT(*) INTO usuario_count
+    FROM usuarios
+    WHERE nombre_usuario = p_nombre_usuario;
+
+    IF usuario_count > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El nombre de usuario ya existe';
+    ELSE
+
+        INSERT INTO usuarios (nombre_usuario, contrasena)
+        VALUES (p_nombre_usuario, p_contrasena);
+    END IF;
+END;
+
 CREATE PROCEDURE obtenerContactosDetallados()
 BEGIN
     SELECT
