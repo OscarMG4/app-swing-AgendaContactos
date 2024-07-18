@@ -23,7 +23,16 @@ public class EditarContacto extends javax.swing.JFrame {
     private ContactoDAO contactoDAO;
 
     public EditarContacto(Contacto contacto, Usuario usuario) {
-        
+        this.contacto = contacto;
+        this.usuario = usuario;
+        this.contactoDAO = new ContactoDAO();
+        initComponents();
+        configurarComponentes();
+        llenarDatosContacto();
+        configurarEventos();
+    }
+
+    private void configurarComponentes() {
         transparenciabtn();
         
         JTCorreo.setBackground(new java.awt.Color(0, 0, 0, 1));
@@ -37,21 +46,21 @@ public class EditarContacto extends javax.swing.JFrame {
         Image scaledImage = originalIcon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
         jLabel1.setIcon(new ImageIcon(scaledImage));
         
-        this.contacto = contacto;
-        this.usuario = usuario;
-        this.contactoDAO = new ContactoDAO();
-        initComponents();
         this.getContentPane().setBackground(new Color(0x00, 0x9C, 0xB8));
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
+    }
 
+    private void llenarDatosContacto() {
         JTNombre.setText(contacto.getNombre());
         JTNumero.setText(contacto.getTelefonos());
         JTCorreo.setText(contacto.getEmail());
         JTDireccion.setText(contacto.getDireccion());
         jTCumpleanios.setText(contacto.getCumpleanios().toString());
         JTNota.setText(contacto.getNota());
+    }
 
+    private void configurarEventos() {
         JTNombre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -144,7 +153,6 @@ public class EditarContacto extends javax.swing.JFrame {
                 }
             }
         });
-
     }
 
     EditarContacto(Contacto contactoSeleccionado) {
