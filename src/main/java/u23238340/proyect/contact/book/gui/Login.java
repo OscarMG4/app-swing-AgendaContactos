@@ -162,11 +162,6 @@ public class Login extends javax.swing.JFrame {
         CheckBoxRecordar.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         CheckBoxRecordar.setForeground(new java.awt.Color(199, 226, 255));
         CheckBoxRecordar.setText("Recordar Contraseña");
-        CheckBoxRecordar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckBoxRecordarActionPerformed(evt);
-            }
-        });
         jPanel1.add(CheckBoxRecordar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo.jpeg"))); // NOI18N
@@ -270,10 +265,6 @@ public class Login extends javax.swing.JFrame {
         ver.setEnabled(false);
         ver.setEnabled(false);
     }//GEN-LAST:event_verMouseClicked
-
-    private void CheckBoxRecordarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxRecordarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CheckBoxRecordarActionPerformed
 
     private Usuario validarCredenciales(String usuario, String contrasenia) throws CredencialesIncorrectasException {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
