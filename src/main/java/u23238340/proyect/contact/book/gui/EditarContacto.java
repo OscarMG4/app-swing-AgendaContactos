@@ -1,6 +1,7 @@
 package u23238340.proyect.contact.book.gui;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -8,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import u23238340.proyect.contact.book.dao.ContactoDAO;
@@ -21,6 +23,20 @@ public class EditarContacto extends javax.swing.JFrame {
     private ContactoDAO contactoDAO;
 
     public EditarContacto(Contacto contacto, Usuario usuario) {
+        
+        transparenciabtn();
+        
+        JTCorreo.setBackground(new java.awt.Color(0, 0, 0, 1));
+        JTDireccion.setBackground(new java.awt.Color(0, 0, 0, 1));
+        JTNombre.setBackground(new java.awt.Color(0, 0, 0, 1));
+        JTNota.setBackground(new java.awt.Color(0, 0, 0, 1));
+        JTNumero.setBackground(new java.awt.Color(0, 0, 0, 1));
+        jTCumpleanios.setBackground(new java.awt.Color(0, 0, 0, 1));
+        
+        ImageIcon originalIcon = (ImageIcon) jLabel1.getIcon();
+        Image scaledImage = originalIcon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        jLabel1.setIcon(new ImageIcon(scaledImage));
+        
         this.contacto = contacto;
         this.usuario = usuario;
         this.contactoDAO = new ContactoDAO();
@@ -139,13 +155,7 @@ public class EditarContacto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelTitulo = new javax.swing.JLabel();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabelNumero = new javax.swing.JLabel();
-        jLabelCorreo = new javax.swing.JLabel();
-        jLabelDireccion = new javax.swing.JLabel();
-        jLabelCumple = new javax.swing.JLabel();
-        jLabelNota = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         JTNombre = new javax.swing.JTextField();
         JTNumero = new javax.swing.JTextField();
         JTDireccion = new javax.swing.JTextField();
@@ -154,129 +164,160 @@ public class EditarContacto extends javax.swing.JFrame {
         jTCumpleanios = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jLabelNombre = new javax.swing.JLabel();
+        jLabelNumero = new javax.swing.JLabel();
+        jLabelCorreo = new javax.swing.JLabel();
+        jLabelDireccion = new javax.swing.JLabel();
+        jLabelCumple = new javax.swing.JLabel();
+        jLabelNota = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
         setResizable(false);
 
-        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelTitulo.setText("Editar Contacto");
+        jPanel1.setBackground(new java.awt.Color(27, 154, 233));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre.setText("Nombre:");
+        JTNombre.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        JTNombre.setForeground(new java.awt.Color(255, 255, 255));
+        JTNombre.setBorder(null);
+        jPanel1.add(JTNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 235, 30));
 
-        jLabelNumero.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelNumero.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNumero.setText("Número:");
+        JTNumero.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        JTNumero.setForeground(new java.awt.Color(255, 255, 255));
+        JTNumero.setBorder(null);
+        jPanel1.add(JTNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 235, 30));
 
-        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelCorreo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelCorreo.setText("Correo:");
+        JTDireccion.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        JTDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        JTDireccion.setBorder(null);
+        jPanel1.add(JTDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 235, 30));
 
-        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelDireccion.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelDireccion.setText("Dirección:");
+        JTCorreo.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        JTCorreo.setForeground(new java.awt.Color(255, 255, 255));
+        JTCorreo.setBorder(null);
+        jPanel1.add(JTCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 235, 30));
 
-        jLabelCumple.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelCumple.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelCumple.setText("Cumpleaños:");
+        JTNota.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        JTNota.setForeground(new java.awt.Color(255, 255, 255));
+        JTNota.setBorder(null);
+        jPanel1.add(JTNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 235, 30));
 
-        jLabelNota.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelNota.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNota.setText("Nota:");
+        jTCumpleanios.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        jTCumpleanios.setForeground(new java.awt.Color(255, 255, 255));
+        jTCumpleanios.setBorder(null);
+        jTCumpleanios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTCumpleaniosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTCumpleanios, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 235, 30));
 
         btnGuardar.setBackground(new java.awt.Color(0, 42, 48));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, -1, -1));
 
         btnCancelar.setBackground(new java.awt.Color(0, 42, 48));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/volver.png"))); // NOI18N
+        btnCancelar.setBorder(null);
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 32, 32));
+
+        jLabelNombre.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre.setText("Nombre:");
+        jPanel1.add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        jLabelNumero.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelNumero.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNumero.setText("Número:");
+        jPanel1.add(jLabelNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
+
+        jLabelCorreo.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelCorreo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCorreo.setText("Correo:");
+        jPanel1.add(jLabelCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
+
+        jLabelDireccion.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDireccion.setText("Dirección:");
+        jPanel1.add(jLabelDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
+
+        jLabelCumple.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelCumple.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCumple.setText("Cumpleaños:");
+        jPanel1.add(jLabelCumple, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 140, 30));
+
+        jLabelNota.setFont(new java.awt.Font("Perpetua", 1, 24)); // NOI18N
+        jLabelNota.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNota.setText("Nota:");
+        jPanel1.add(jLabelNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, -1, -1));
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("____________________________________");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 290, 39));
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("____________________________________");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 290, 39));
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("____________________________________");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 290, 39));
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("____________________________________");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 290, 39));
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("____________________________________");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 290, 39));
+
+        jLabelTitulo.setFont(new java.awt.Font("Monotype Corsiva", 1, 36)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTitulo.setText("Editar Contacto");
+        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 230, -1));
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("____________________________________");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 290, 39));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo.jpeg"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 80, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addGap(86, 86, 86))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNombre)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabelNumero)
-                                .addComponent(jLabelCorreo))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelNota)
-                            .addComponent(jLabelCumple)
-                            .addComponent(jLabelDireccion))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitulo)
-                    .addComponent(JTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTNota, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTCumpleanios, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabelTitulo)
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombre)
-                    .addComponent(JTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNumero)
-                    .addComponent(JTNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCorreo)
-                    .addComponent(JTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDireccion)
-                    .addComponent(JTDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelCumple)
-                    .addComponent(jTCumpleanios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTNota, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNota))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnCancelar))
-                .addGap(57, 57, 57))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
         );
 
         pack();
@@ -350,6 +391,10 @@ public class EditarContacto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void jTCumpleaniosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCumpleaniosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTCumpleaniosActionPerformed
+
     public Contacto obtenerContactoParaEdicion(int idContacto) {
         return contactoDAO.obtenerContactoPorId(idContacto);
     }
@@ -414,6 +459,12 @@ public class EditarContacto extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void transparenciabtn(){
+        btnCancelar.setOpaque(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setBorderPainted(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JTCorreo;
@@ -423,6 +474,13 @@ public class EditarContacto extends javax.swing.JFrame {
     private javax.swing.JTextField JTNumero;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelCumple;
     private javax.swing.JLabel jLabelDireccion;
@@ -430,6 +488,7 @@ public class EditarContacto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNota;
     private javax.swing.JLabel jLabelNumero;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTCumpleanios;
     // End of variables declaration//GEN-END:variables
 }

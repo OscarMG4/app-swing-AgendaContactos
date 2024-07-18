@@ -1,7 +1,9 @@
 package u23238340.proyect.contact.book.gui;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import u23238340.proyect.contact.book.dao.UsuarioDAO;
 import u23238340.proyect.contact.book.model.Usuario;
@@ -10,8 +12,17 @@ public class RegistrarUsuario extends javax.swing.JFrame {
 
     public RegistrarUsuario() {
         initComponents();
+        transparenciabtn();
         this.setTitle("AGENDA DE CONTACTOS PERSONALES");
         this.setLocationRelativeTo(null);
+        
+        ImageIcon originalIcon = (ImageIcon) jLabel1.getIcon();
+        Image scaledImage = originalIcon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        jLabel1.setIcon(new ImageIcon(scaledImage));
+        
+        txtUsuario.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtPass.setBackground(new java.awt.Color(0, 0, 0, 1));
+        txtPass2.setBackground(new java.awt.Color(0, 0, 0, 1));
 
         txtUsuario.addActionListener(new ActionListener() { //focus
             @Override
@@ -40,117 +51,110 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabelTitulo = new javax.swing.JLabel();
-        jLabelUsuario = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        jLabelPassword = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JToggleButton();
-        jLabelPassword1 = new javax.swing.JLabel();
         txtPass = new javax.swing.JTextField();
         txtPass2 = new javax.swing.JTextField();
         txtCancelar = new javax.swing.JButton();
+        jLabelUsuario = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabelPassword = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelPassword1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 156, 184));
+        jPanel1.setBackground(new java.awt.Color(27, 154, 233));
         jPanel1.setForeground(new java.awt.Color(0, 156, 184));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelTitulo.setText("Registrar Usuario");
-
-        jLabelUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelUsuario.setText("USUARIO:");
-
-        jLabelPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelPassword.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPassword.setText("CONTRASEÑA:");
+        txtUsuario.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setBorder(null);
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 290, 35));
 
         btnIngresar.setBackground(new java.awt.Color(0, 42, 48));
         btnIngresar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("REGISTRAR");
+        btnIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/enter.png"))); // NOI18N
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIngresarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 64, 64));
 
-        jLabelPassword1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelPassword1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPassword1.setText("REPITA SU CONTRASEÑA:");
+        txtPass.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass.setBorder(null);
+        jPanel1.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 290, 35));
+
+        txtPass2.setFont(new java.awt.Font("Perpetua", 0, 24)); // NOI18N
+        txtPass2.setForeground(new java.awt.Color(255, 255, 255));
+        txtPass2.setBorder(null);
+        jPanel1.add(txtPass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 350, 290, 35));
 
         txtCancelar.setBackground(new java.awt.Color(0, 42, 48));
         txtCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        txtCancelar.setText("CANCELAR");
+        txtCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/volver.png"))); // NOI18N
+        txtCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(txtCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 32, 32));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txtCancelar)
-                .addGap(35, 35, 35))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTitulo)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabelPassword)
-                                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelPassword1)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                                .addComponent(txtPass)
-                                .addComponent(txtPass2)))))
-                .addContainerGap(214, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(txtCancelar)
-                .addGap(5, 5, 5)
-                .addComponent(jLabelTitulo)
-                .addGap(46, 46, 46)
-                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabelPassword)
-                .addGap(18, 18, 18)
-                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jLabelPassword1)
-                .addGap(18, 18, 18)
-                .addComponent(txtPass2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
-        );
+        jLabelUsuario.setFont(new java.awt.Font("Poor Richard", 1, 18)); // NOI18N
+        jLabelUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelUsuario.setText("USUARIO:");
+        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 85, 16));
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("____________________________________");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 290, 39));
+
+        jLabelPassword.setFont(new java.awt.Font("Poor Richard", 1, 18)); // NOI18N
+        jLabelPassword.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPassword.setText("CONTRASEÑA:");
+        jPanel1.add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, -1, -1));
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("____________________________________");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 290, 39));
+
+        jLabelPassword1.setFont(new java.awt.Font("Poor Richard", 1, 18)); // NOI18N
+        jLabelPassword1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPassword1.setText("REPITA SU CONTRASEÑA:");
+        jPanel1.add(jLabelPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, -1, -1));
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("____________________________________");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 290, 39));
+
+        jLabelTitulo.setFont(new java.awt.Font("Monotype Corsiva", 1, 48)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTitulo.setText("Registrar Usuario");
+        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo.jpeg"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 320, 320));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
         );
 
         pack();
@@ -234,10 +238,23 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private void mostrarMensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    public void transparenciabtn(){
+        btnIngresar.setOpaque(false);
+        btnIngresar.setContentAreaFilled(false);
+        btnIngresar.setBorderPainted(false);
+        txtCancelar.setOpaque(false);
+        txtCancelar.setContentAreaFilled(false);
+        txtCancelar.setBorderPainted(false);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnIngresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelPassword1;
     private javax.swing.JLabel jLabelTitulo;
